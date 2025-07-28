@@ -2,6 +2,7 @@ import { blogPlugin } from '@vuepress/plugin-blog'
 import { defaultTheme } from '@vuepress/theme-default'
 import { defineUserConfig } from 'vuepress'
 import { viteBundler } from '@vuepress/bundler-vite'
+import path from 'path'
 
 export default defineUserConfig({
   lang: 'zh-CN',
@@ -31,13 +32,25 @@ export default defineUserConfig({
         link: '/timeline/',
       },
     ],
+
+    // 修改后的 sidebar 配置
+    sidebar: {
+      // 针对 leetcode 目录的侧边栏配置
+      '/leetcode/': [
+        {
+          text: 'LeetCode 题解',
+          collapsible: true,
+          children: ['20250728.md', '20250729.md'],
+        },
+      ],
+    },
   }),
 
   plugins: [
     blogPlugin({
       // Only files under posts are articles
       filter: ({ filePathRelative }) =>
-        filePathRelative ? filePathRelative.startsWith('posts/') : false,
+        filePathRelative ? filePathRelative.startsWith('leetcode/') : false,
 
       // Getting article info
       getInfo: ({ frontmatter, title, data }) => ({
