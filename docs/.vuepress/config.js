@@ -40,7 +40,13 @@ export default defineUserConfig({
         {
           text: 'LeetCode 题解',
           collapsible: true,
-          children: ['20250728.md', '20250729.md', '20250730.md', '20250731.md'],
+          children: [
+            '20250728.md',
+            '20250729.md',
+            '20250730.md',
+            '20250731.md',
+            '20250801.md',
+          ],
         },
       ],
     },
