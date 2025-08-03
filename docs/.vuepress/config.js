@@ -46,6 +46,12 @@ export default defineUserConfig({
             '20250730.md',
             '20250731.md',
             '20250801.md',
+            '20250802.md',
+          ],
+          text: 'LeetCode 难题回顾',
+          collapsible: true,
+          children: [            
+            '20250803.md',
           ],
         },
       ],
