@@ -50,6 +50,8 @@ export default defineUserConfig({
             '20250803.md',
             '20250804.md',
             '20250805.md',
+            '20250806.md',
+            '20250807.md',
           ],
         },
         {
@@ -57,6 +59,7 @@ export default defineUserConfig({
           collapsible: true,
           children: [            
             '20250803.md',
+            '20250807.md',
           ],
         },
       ],
