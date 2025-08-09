@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.20" />
+    <style>
+      :root {
+        --vp-c-bg: #fff;
+      }
+
+      [data-theme='dark'] {
+        --vp-c-bg: #1b1b1f;
+      }
+
+      html,
+      body {
+        background-color: var(--vp-c-bg);
+      }
+    </style>
+    <script>
+      const useChoice = localStorage.getItem('vuepress-color-scheme')
+      const systemStatus =
+        'matchMedia' in window
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false
+
+      if (useChoice === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (useChoice === 'dark' || systemStatus) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+    <title>郑千鹤的博客</title><meta name="description" content="哦耶">
+    <link rel="preload" href="/assets/style-QXEKf4Y2.css" as="style"><link rel="stylesheet" href="/assets/style-QXEKf4Y2.css">
+    <link rel="modulepreload" href="/assets/app-GS5Nu8qV.js"><link rel="modulepreload" href="/assets/404.html-BWzDE1Q1.js">
+    <link rel="prefetch" href="/assets/index.html-BMP6dPLH.js" as="script"><link rel="prefetch" href="/assets/get-started.html-B3KrZwYn.js" as="script"><link rel="prefetch" href="/assets/20250728.html-DzQeYYOz.js" as="script"><link rel="prefetch" href="/assets/20250729.html-DYosCXJC.js" as="script"><link rel="prefetch" href="/assets/20250730.html-Y8JLmYVP.js" as="script"><link rel="prefetch" href="/assets/20250731.html-CHqqs92s.js" as="script"><link rel="prefetch" href="/assets/20250801.html-D4NT8mex.js" as="script"><link rel="prefetch" href="/assets/20250802.html-Btgy9gQG.js" as="script"><link rel="prefetch" href="/assets/20250803.html-BbGyE4kM.js" as="script"><link rel="prefetch" href="/assets/20250804.html-BQYoaBgA.js" as="script"><link rel="prefetch" href="/assets/20250805.html-BQ3jPBn8.js" as="script"><link rel="prefetch" href="/assets/20250806.html-C7sKjliS.js" as="script"><link rel="prefetch" href="/assets/20250807.html-lo9Zw_j0.js" as="script"><link rel="prefetch" href="/assets/20250808.html-D7ICR6TP.js" as="script"><link rel="prefetch" href="/assets/20250809.html-DxcRVQSd.js" as="script"><link rel="prefetch" href="/assets/archive1.html-BP5RQavp.js" as="script"><link rel="prefetch" href="/assets/archive2.html-BQs6HzOD.js" as="script"><link rel="prefetch" href="/assets/article1.html-CCocEdiM.js" as="script"><link rel="prefetch" href="/assets/article10.html-DthfmZ_m.js" as="script"><link rel="prefetch" href="/assets/article11.html-DTldOJ24.js" as="script"><link rel="prefetch" href="/assets/article12.html-ILZoyBtr.js" as="script"><link rel="prefetch" href="/assets/article2.html-Fm0ywVW0.js" as="script"><link rel="prefetch" href="/assets/article3.html-DVgYQAwu.js" as="script"><link rel="prefetch" href="/assets/article4.html-Bbs8y5z8.js" as="script"><link rel="prefetch" href="/assets/article5.html-BXKgb0Vn.js" as="script"><link rel="prefetch" href="/assets/article6.html-BYuL1Hhl.js" as="script"><link rel="prefetch" href="/assets/article7.html-ug2YEqUq.js" as="script"><link rel="prefetch" href="/assets/article8.html-CXE8v747.js" as="script"><link rel="prefetch" href="/assets/article9.html-C7w4j0yC.js" as="script"><link rel="prefetch" href="/assets/sticky.html-BE3Vi3CN.js" as="script"><link rel="prefetch" href="/assets/sticky2.html-B4scDUDU.js" as="script"><link rel="prefetch" href="/assets/index.html-BkiC-ko7.js" as="script"><link rel="prefetch" href="/assets/index.html-D2lWdnT3.js" as="script"><link rel="prefetch" href="/assets/index.html-DmsfO71y.js" as="script"><link rel="prefetch" href="/assets/index.html-Va3xyQvm.js" as="script"><link rel="prefetch" href="/assets/index.html-DeEMIZ7h.js" as="script"><link rel="prefetch" href="/assets/index.html-BWK_FBKR.js" as="script"><link rel="prefetch" href="/assets/index.html-0Co0fmx6.js" as="script"><link rel="prefetch" href="/assets/index.html-Dmat0hZ7.js" as="script"><link rel="prefetch" href="/assets/index.html-DB_-7T2F.js" as="script"><link rel="prefetch" href="/assets/index.html-9hRPqfO7.js" as="script"><link rel="prefetch" href="/assets/index.html-x2MVZs2O.js" as="script"><link rel="prefetch" href="/assets/index.html-C4hnPNzR.js" as="script"><link rel="prefetch" href="/assets/index.html-CQZLXgYd.js" as="script"><link rel="prefetch" href="/assets/index.html-BxkiSCwb.js" as="script"><link rel="prefetch" href="/assets/index.html-CO2LTQIe.js" as="script"><link rel="prefetch" href="/assets/index.html-B9CZBvXv.js" as="script"><link rel="prefetch" href="/assets/index.html-CH9SMCJz.js" as="script"><link rel="prefetch" href="/assets/index.html-mkuL-x8w.js" as="script"><link rel="prefetch" href="/assets/index.html-DSmXDfhi.js" as="script"><link rel="prefetch" href="/assets/index.html-QoCzrg50.js" as="script"><link rel="prefetch" href="/assets/index.html-PIL6rLfX.js" as="script"><link rel="prefetch" href="/assets/index.html-BJkTvEiK.js" as="script"><link rel="prefetch" href="/assets/index.html-CwWK-8oe.js" as="script"><link rel="prefetch" href="/assets/index.html-YCaA2VNZ.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="vp-theme-container" vp-container data-v-ec9917b8><main class="page" data-v-ec9917b8><div vp-content data-v-ec9917b8><h1 data-v-ec9917b8>404</h1><blockquote data-v-ec9917b8>That&#39;s a Four-Oh-Four.</blockquote><a class="route-link" href="/" data-v-ec9917b8>Take me home</a></div></main></div><!--[--><!----><!--]--><!--]--></div>
+    <script type="module" src="/assets/app-GS5Nu8qV.js" defer></script>
+  </body>
+</html>
