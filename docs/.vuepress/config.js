@@ -38,7 +38,7 @@ export default defineUserConfig({
       // 针对 leetcode 目录的侧边栏配置
       '/leetcode/': [
         {
-          text: 'LeetCode 题解',
+          text: 'LeetCode 每日一题',
           collapsible: true,
           children: [
             '20250728.md',
@@ -52,6 +52,24 @@ export default defineUserConfig({
             '20250805.md',
             '20250806.md',
             '20250807.md',
+            '20250808.md',
+            '20250809.md',
+            '20250810.md',
+            '20250811.md',
+            '20250812.md',
+            '20250813.md',
+            '20250814.md',
+            '20250815.md',
+            '20250816.md',
+            '20250817.md',
+            '20250818.md',
+            '20250819.md',
+            '20250820.md',
+            '20250821.md',
+            '20250822.md',
+            '20250823.md',
+            '20250824.md',
+            '20250825.md',
           ],
         },
         {
@@ -62,7 +80,31 @@ export default defineUserConfig({
             '20250807.md',
           ],
         },
+        {
+          text: 'LeetCode HOT100',
+          collapsible: true,
+          children: [            
+            '20250803.md',
+          ],
+        },
+        {
+          text: '算法专题与总结',
+          collapsible: true,
+          children: [            
+            '20250803.md',
+          ],
+        },
+
       ],
+      '/llm/': [
+        {
+          text: '大模型llm',
+          collapsible: true,
+          children: [
+            'archive1.md',
+          ],
+        },
+      ]
     },
   }),
 
@@ -70,7 +112,7 @@ export default defineUserConfig({
     blogPlugin({
       // Only files under posts are articles
       filter: ({ filePathRelative }) =>
-        filePathRelative ? filePathRelative.startsWith('leetcode/') : false,
+        filePathRelative ? filePathRelative.startsWith('leetcode/') || filePathRelative.startsWith('llm/') : false,
 
       // Getting article info
       getInfo: ({ frontmatter, title, data }) => ({
