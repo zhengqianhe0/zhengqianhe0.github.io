@@ -70,6 +70,8 @@ export default defineUserConfig({
             '20250823.md',
             '20250824.md',
             '20250825.md',
+            '20250826.md',
+            '20250827.md',
           ],
         },
         {
@@ -78,6 +80,7 @@ export default defineUserConfig({
           children: [            
             '20250803.md',
             '20250807.md',
+            '20250827.md',
           ],
         },
         {
