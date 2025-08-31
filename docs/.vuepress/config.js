@@ -72,6 +72,10 @@ export default defineUserConfig({
             '20250825.md',
             '20250826.md',
             '20250827.md',
+            '20250828.md',
+            '20250829.md',
+            '20250830.md',
+            '20250831.md',
           ],
         },
         {
@@ -81,6 +85,7 @@ export default defineUserConfig({
             '20250803.md',
             '20250807.md',
             '20250827.md',
+            '20250831.md',
           ],
         },
         {
