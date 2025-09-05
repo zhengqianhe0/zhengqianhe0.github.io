@@ -109,7 +109,7 @@ export default defineUserConfig({
           text: '大模型llm',
           collapsible: true,
           children: [
-            'archive1.md',
+            'cortex.md',
           ],
         },
       ]
