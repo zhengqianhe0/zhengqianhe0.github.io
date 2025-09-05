@@ -6,7 +6,6 @@ tag:
   - 大模型
   - MoE
   - 强化学习
-
 ---
 
 # Cortex项目学习
@@ -40,7 +39,7 @@ Model: Cotex-0.6B-A0.2B
   - 使用SSE处理流式响应
 
 - 页面交互
-  - 表单交互（<form id="chat-form">）和输入控件（<textarea>、<input type="range">）。
+  - 表单交互`<form id="chat-form">`和输入控件`<textarea>、<input type="range">`。
   - 自定义样式，如滚动条，动画，过渡
 - JavaScript ES6
   - DOM操作（document.addEventListener, getElementById）

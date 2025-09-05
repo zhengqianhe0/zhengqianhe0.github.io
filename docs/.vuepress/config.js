@@ -21,11 +21,11 @@ export default defineUserConfig({
       },
       {
         text: 'Category',
-        link: '/category/',
+        link: '/category/leetcode每日一题/',
       },
       {
         text: 'Tag',
-        link: '/tag/',
+        link: '/tag/大模型/',
       },
       {
         text: 'Timeline',
@@ -106,7 +106,7 @@ export default defineUserConfig({
       ],
       '/llm/': [
         {
-          text: '大模型llm',
+          text: 'LLM',
           collapsible: true,
           children: [
             'cortex.md',
