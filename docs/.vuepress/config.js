@@ -110,6 +110,8 @@ export default defineUserConfig({
           collapsible: true,
           children: [
             'cortex.md',
+            'RAG.md',
+            'Context Engineering.md',
           ],
         },
       ]
