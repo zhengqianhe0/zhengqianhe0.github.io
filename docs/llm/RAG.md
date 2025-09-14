@@ -41,6 +41,18 @@ https://github.com/yilinjz/astchunk
 
 cursor如何回答关于项目结构的问题？结构化表示项目目录，搜索可能存在的readme文档
 
+### Cursor的代码库索引
+
+https://mp.weixin.qq.com/s/QAV5dTNBbBqeUfMP6qAN5A
+
+https://read.engineerscodex.com/p/how-cursor-indexes-codebases-fast，主要思想还是利用Merkle树快速索引代码库。Merkle树是一种树形结构，其中每个“叶”节点都标记有数据块的加密哈希值，每个非叶节点都标记有其子节点标签的加密哈希值，这种结构创建了一个分层结构。
+
+Cursor首先在本地将代码库文件分割成语义上有意义的块，启用代码库索引时，Cursor会扫描编辑器中打开的文件夹，并计算所有有效文件的哈希值的Merkle树。代码块被发送到Cursor的服务器后，会使用OpenAI的嵌入API或自定义嵌入模型生成嵌入。但是，还是老问题，代码库索引的有效性在很大程度上取决于代码是如何被分割的。
+
+在工具上，可以使用像tree-sitter这样的工具来进行AST解析，它支持多种编程语言。
+
+《**[代码RAG第二弹：代码类的GraphRAG怎么做？一个示例项目](https://mp.weixin.qq.com/s?__biz=MzAxMjc3MjkyMg==&mid=2648421306&idx=1&sn=ac93f33cc8e1aa6a9b1722c2534b2554&scene=21#wechat_redirect)**》
+
 ## 1.2 多模态GraphRAG
 
 https://mp.weixin.qq.com/s/UtSjX_D2k-Cp7iJT-CNqtQ
@@ -72,4 +84,69 @@ https://mp.weixin.qq.com/s/UtSjX_D2k-Cp7iJT-CNqtQ
 **文档为中心的多模态GraphRAG及MultimodalDocGraph是个很好的故事，这个可以讲一个比较好的故事，多模态、kg、文档解析、rag都通了。😊**
 
 ## 1.3 Deep Research进展
+
+商业与非商业的实现的总结 https://arxiv.org/pdf/2506.12594
+
+现有的开源agent框架 https://github.com/scienceaix/deepresearch
+
+涉及到的组成部分：
+
+- 基座与推理模型（上下文管理，记忆，CoT，ToT）
+- 任务规划与执行（任务分解，层级规划，自动执行与监控，多agent协同）
+- 工具使用与环境交互（网页导航与交互，内容处理，API调用，领域特定tool使用）
+- 知识生成（结果评估，来源认证，生成结构化报告，交互）
+
+实现架构：
+
+1. 单体式，以核心推理引擎集中控制
+2. 流水线式，定义严格的工作流和各阶段之间的接口与数据格式
+3. 多智能体式，设计明确的通信协议，进行不同角色和责任的多智能体协作
+4. 混合模式
+
+评估要点：基础模型，推理效率，上下文长度，工具集成与环境适应性，任务规划与执行稳定性，知识聚合与输出质量，不同场景的适应性（学术研究，企业决策，个人知识管理）
+
+待解决的问题：隐私，知识产权，可访问性
+
+未来研究方向：高级推理架构，多模态集成，领域特化，基于人机协作的标准化
+
+## 1.4 Embedding模型进展
+
+https://mp.weixin.qq.com/s/HYd2EkU01O3IgQn2ENaEkw
+
+传统embedding模型固定向量维度输出，参数量小。
+
+从Nvidia的NV-Embed到jina-v4，embedding模型主逐渐转向：
+
+- 单模态-多模态
+- 单一向量-多向量
+- 固定维度-自定义维度
+- 小模型-大模型
+
+并且，开始使用合成数据等方式挖掘难样本，并针对特定任务补充能力项。
+
+**对比Qwen3系列embedding模型和reranker模型：**
+
+|              | Embedding              | Reranker                                  |
+| ------------ | ---------------------- | ----------------------------------------- |
+| 处理数据类型 | 单个文本转化为语义向量 | 文本对（查询和文档），输出相关性分数      |
+| 模型架构     | 双编码器架构           | 交叉编码器，对query和文档联合编码（极慢） |
+| 技术基础     | 基于大语言模型         | 基于大语言模型                            |
+
+训练过程：构造数据-lora微调-模型合并
+
+RAG流程：
+
+- 预处理：知识库切块，利用embedding模型向量化
+- RAG：问题向量化，余弦相似度匹配初步召回，重排序top-n，合并查询上下文构造prompt，生成
+
+## 1.5 文档智能专题
+
+https://mp.weixin.qq.com/s/QAV5dTNBbBqeUfMP6qAN5A
+
+文档解析可以使用单独的多模态大模型进行解析，也可以构建工作流，进行布局分析，文本提取。继续做差异性可以在于：跨页图表/段落的合并。跨页文档，甚至有专门的数据集由于评测。需要判断以下问题：
+
+- 文档问题回答失败的核心，是否是跨页导致的
+- 为了解决跨页问题导致的时间开销是否有必要
+
+过去的典型项目：https://mp.weixin.qq.com/s/5852Kn8wVlsSGpclrjkBNA，涉及RAGflow，MinerU等， 提供了很多细节的文档解析功能。
 
