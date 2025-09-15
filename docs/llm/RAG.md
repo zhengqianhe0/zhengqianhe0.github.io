@@ -150,3 +150,48 @@ https://mp.weixin.qq.com/s/QAV5dTNBbBqeUfMP6qAN5A
 
 过去的典型项目：https://mp.weixin.qq.com/s/5852Kn8wVlsSGpclrjkBNA，涉及RAGflow，MinerU等， 提供了很多细节的文档解析功能。
 
+## 1.6 多模态RAG
+
+https://mp.weixin.qq.com/s/BbT0XCGbjwJ6mXb2EuVyGg
+
+做多模态RAG需要有多模态Embedding模型，例如ColBERT（本身是文本embed），ColPali。
+
+以上的传统解决方案存在局限性：
+
+- 检索结果是页面级的，没法分析页面的具体内容
+- ColBERT依赖于文本信息，对文本中的数值信息解析能力差
+- 框架M3DocRAG，能够结合文本和图像信息，但缺乏信息的细致提取，和跨模态整合能力
+
+因此，尝试使用agent解决，https://arxiv.org/pdf/2503.13964，https://github.com/aiming-lab/MDocAgent，多模态多智能体框架，利用文本和图像信息来提高文档问答的准确性。
+
+**MDocAgent**：
+
+- 设计五个由prompt驱动的agent（初步生成，提取关键信息，文本处理，图像处理，综合智能体整合），**ColBERTv2和ColPali**分别作为文本和图像检索器
+- 文档智能方面，还是使用OCR+PDF解析提取文本，按页保存为图像，生成文本和视觉表示
+- 实现过程中，分别用两个检索器进行检索，agent各自分工处理文本和多模态，最终整合
+
+### 一个小专题：非标准印刷体/问题图像的文档解析
+
+几何弯曲、阴影、污渍等变化直接影响layout与ocr的效果
+
+前沿的方案可以看《**DocRes: A Generalist Model Toward Unifying Document Image Restoration Task**s》，代码在：https://github.com/ZZZHANG-jx/DocRes/tree/master，https://arxiv.org/pdf/2405.04408
+
+其意义在于提出一个统一了**五种文档图像还原任务的通用模型，包括去扭曲、去阴影、外观增强、去模糊和二值化**。<u>方法上，采用自行构建的一个模型。</u>
+
+其他图像增强的文档处理整合
+
+https://github.com/ZZZHANG-jx/Recommendations-Document-Image-Processing
+
+## 1.7 prompt工程
+
+RAG落地过程中prompt也是很重要的一环。
+
+https://github.com/asgeirtj/system_prompts_leaks/  各大主流大模型的系统提示词
+
+提示词的历史发展：
+
+- zero-shot-CoT： Let's think step by step
+- optimizers： Take a deep breath and work on this problem step-by-step
+- emotion prompt： Are you sure？ This is very important to me.
+  - PUA类：你确定？相信你的能力。你要将这个困难挑战视为成长机会
+
