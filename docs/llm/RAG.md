@@ -139,6 +139,28 @@ RAG流程：
 - 预处理：知识库切块，利用embedding模型向量化
 - RAG：问题向量化，余弦相似度匹配初步召回，重排序top-n，合并查询上下文构造prompt，生成
 
+### 一个趋势：小参数的embedding模型
+
+Google的Embedding Gemma-308M模型，支持100+语言，输出嵌入维度大小可选。
+
+3.08亿个参数，1亿模型参数，2亿嵌入参数。
+
+- 嵌入参数指的是“词表大小V×嵌入维度D”
+  - 嵌入维度指的是输入嵌入的维度，即初始文本的每个token初步处理成高维向量时的维度
+
+⚠**目前尺寸更长、维度可定义、模型更小、数据更多样化、特定任务特定instruction的趋势逐步成为标配**。
+
+**使用案例**：
+
+1. 文本
+2. 分词token
+3. 初始嵌入
+4. transformer捕捉上下文关系生成深层表示
+5. 对token级向量均值池化（特征压缩），聚合成单一的上下文向量。原始每个token都有一个1×768维的向量表示，通过按句子压缩，每一个token的同一维度被聚合，得到对于句子的1×768维向量。好处：高校、防止过拟合，无论句子有多少token向量表示维度都一致。
+6. 通过全连接层生成指定的输出维度
+
+小模型应用场景：高响应速度需求、端侧部署
+
 ## 1.5 文档智能专题
 
 https://mp.weixin.qq.com/s/QAV5dTNBbBqeUfMP6qAN5A
@@ -148,7 +170,17 @@ https://mp.weixin.qq.com/s/QAV5dTNBbBqeUfMP6qAN5A
 - 文档问题回答失败的核心，是否是跨页导致的
 - 为了解决跨页问题导致的时间开销是否有必要
 
-过去的典型项目：https://mp.weixin.qq.com/s/5852Kn8wVlsSGpclrjkBNA，涉及RAGflow，MinerU等， 提供了很多细节的文档解析功能。
+过去的典型项目：https://mp.weixin.qq.com/s/5852Kn8wVlsSGpclrjkBNA，涉及RAGflow（企业级领域知识库RAG问答工作流搭建解决方案），MinerU（专长于PDF分析）等， 提供了很多细节的文档解析功能。
+
+### 数据构建
+
+文档解析模型，布局检测、多模态解析模型，都可以用到大模型训练语料的处理当中。
+
+https://mp.weixin.qq.com/s/idPm-boNEsZtMaNOXJJe9A
+
+https://huggingface.co/datasets/HuggingFaceFW/finepdfs
+
+构造过程中集成了OCR，布局检测，语言识别，hash去重，姓名隐私化处理等，还训练了单独的xgboost模型用于需求检测与分类。
 
 ## 1.6 多模态RAG
 
@@ -169,6 +201,26 @@ https://mp.weixin.qq.com/s/BbT0XCGbjwJ6mXb2EuVyGg
 - 设计五个由prompt驱动的agent（初步生成，提取关键信息，文本处理，图像处理，综合智能体整合），**ColBERTv2和ColPali**分别作为文本和图像检索器
 - 文档智能方面，还是使用OCR+PDF解析提取文本，按页保存为图像，生成文本和视觉表示
 - 实现过程中，分别用两个检索器进行检索，agent各自分工处理文本和多模态，最终整合
+
+### 评估数据集
+
+#### Double-Bench
+
+https://arxiv.org/pdf/2508.03644
+
+多模态文档检索数据集，单跳/多跳，多语言，多类文档
+
+数据构建过程是亮点：：原始文档经过粗粒过滤（10-50页，使用GPT-4o进行语言验证），然后使用Docling和MinerU等工具进行模态分解，将每页拆分为构成文本、表格和图形组件，然后生成单跳查询，同时额外构建知识图谱，以辅助多跳查询的生成。这个点值得借鉴，**做多跳数据生成，还是使用知识图谱来做中间辅助。**
+
+很棒的一篇多模态数据集工作：
+
+- embedding模型选型（文本+多模态）
+- MLLM选型
+- 评测了文档多模态RAG框架（**MDocAgent**、**ViDoRAG**、**M3DOCRAG**、**Colqwen-gen**）
+
+⚠**框架的回答准确性与检索准确性高度相关**，Colqwen-gen（强检索+简单生成）的多跳回答正确率接近复杂框架MDocAgent，证明“优化检索阶段”比“设计复杂生成流程”更关键；
+
+**主流框架（如MDocAgent、ViDoRAG）倾向“有问必答”**，即便未检索到证据，仍生成推测性内容，过度自信。复杂框架（MDocAgent、ViDoRAG）因多智能体串行协调，推理时间是Colqwen-gen的4倍左右。
 
 ### 一个小专题：非标准印刷体/问题图像的文档解析
 
@@ -195,3 +247,59 @@ https://github.com/asgeirtj/system_prompts_leaks/  各大主流大模型的系�
 - emotion prompt： Are you sure？ This is very important to me.
   - PUA类：你确定？相信你的能力。你要将这个困难挑战视为成长机会
 
+## 1.8 Memory上下文管理
+
+对于agent，常见的上下文管理包括：
+
+- 短期记忆：系统提示词+顺序存储完整上下文+用户问题
+- 长期记忆：控制聊天记录长度做为短期内存，单独存储长期内存进行管理并检索相关记忆（效率会变低，但可以进行用户定制，跨越多个对话和历史对话）
+
+- update类：针对memory管理使用curd操作。没出现过的加入，出现过有矛盾的要删除旧的，同一方向有补充的要更新，本质上是基于语义做RAG。如果还不够，在做知识图谱的实体与关系抽取。例子参考mem0：http://arxiv.org/pdf/2504.19413
+
+记忆管理的榜单：https://github.com/NevaMind-AI/memU memu方法准确度最高，但单词检索需要1s，更不用说需要把检索结果用于大模型再生成内容。
+
+## 1.9 RAG+科研：UltraRAG
+
+https://mp.weixin.qq.com/s/LEtuEKtZyiUqd1pdHW1XBA
+
+https://github.com/OpenBMB/UltraRAG
+
+定位：基于MCP架构设计的 “面向科研的RAG实验加速器”
+
+使用方法：利用现有的组件，编写yaml配置文件，实现串行并行，分支循环，内置常用数据集
+
+## 1.10 GraphRAG的应用与落地
+
+集成式RAG框架，https://github.com/apecloud/ApeRAG/ 在lightRAG（实体抽取、关系抽取、实体合并）基础上，使用了向量搜索和全文关键词搜索，并且以MinerU辅助进行文档解析。整体上是工程的优化，例如实现了知识图谱的隔离，可以做多租户。
+
+GraphRAG落地的工程难题：
+
+- 实体关系抽取时需要用LLM对文本块逐个调用大模型，而且初步抽取后可能还需要动态判断是否需要补充
+- 知识图谱的隔离管理
+- 实体合并与去重的准确性挑战，需要强大的上下文理解能力，尤其在专业领域内不能出错
+- 依赖项较多：MinerU，LLM，图数据库，向量数据库，全文搜索引擎
+
+### 专题：知识抽取时的schema
+
+Schema 指的是对图中实体（Entity）、关系（Relation）和属性（Attribute）的预先定义的结构化模式或本体（Ontology）。抽取前，事先明确定义好允许的实体类别（如 Person, Organization, Product）和关系类型（如 works_for, located_in, develops），抽取过程必须遵循这个预设框架。
+
+因此，schema是一个工程化的解决方案。如果由专家预设的schema，覆盖足够全，则效果很好。但需要专家人工检查的成本，如果漏掉关键信息无法补充。
+
+为什么主流GraphRAG（如LightRAG）选择“无Schema”？因为graphrag中的kg，其实作用做bridge的作用，也就是做锚点用，所以要尽可能的多，也无需要太多限制。GraphRAG并不追求构建一个完美的、可用于独立问答的知识库，而是服务于**下游检索任务**。只要这些节点能帮助用户从A跳到C（即使B有点噪声），它的目的就达到了。
+
+### 召回时的动态top-k
+
+https://mp.weixin.qq.com/s/ahK2XkDp9WsmocuBA6OnDg 或许是可落地的
+
+https://arxiv.org/pdf/2509.04820 传统top-k策略容易遗漏关键片段
+
+两个策略：
+
+1. 在token预算内尽可能多选择相关片段，然后再基于片段元信息（关键词、时间等）过滤，再补充实体相关片段，再利用LLM对现有片段的冗余进行裁剪和压缩，保留关键信息。核心策略是权衡，相关性的chunk占token过多，也不能贪多选很多低相关片段。
+2. 使用agentic RAG多轮动态检索。
+
+成本可控，简单补丁，贴近落地。
+
+## 1.11 RAG加速
+
+Meta的工作，REFRAG（REpresentation For RAG）RAG解码框架，用了一个“压缩-感知-扩展”策略减少冗余计算，为工程策略。
