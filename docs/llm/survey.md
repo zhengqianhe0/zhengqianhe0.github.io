@@ -283,7 +283,7 @@ https://arxiv.org/pdf/2507.09477
    - 单智能体：
      - **提示驱动（Prompt-only）**：如 ReAct 框架让 LLM 交替推理与工具调用，Self-Ask 递归生成子问题实现检索 - 推理 interleaving。
      - **监督微调（SFT）**：如 Toolformer 在含检索 - 推理的数据集上微调，INTERS 构建 20 任务的 SFT 数据集提升泛化性。
-     - **强化学习（RL）**：用奖励信号优化检索 / 推理策略，如 Search-R1 训练生成<search>token 触发检索，DeepResearcher 实现端到端 RL 训练的网页交互智能体。
+     - **强化学习（RL）**：用奖励信号优化检索 / 推理策略，如 Search-R1 训练生成search token 触发检索，DeepResearcher 实现端到端 RL 训练的网页交互智能体。
    - 多智能体：
      - **去中心化**：多智能体分工协作，如 M-RAG 让各智能体从不同数据源检索，MDocAgent 用文本 / 图像智能体处理多模态文档。
      - **中心化 / 分层**：管理者分配任务，如 HM-RAG 用 “分解器 - 检索器 - 决策器” 架构处理多模态任务，Chain of Agents 通过分层处理实现长上下文总结。

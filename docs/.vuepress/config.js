@@ -111,7 +111,8 @@ export default defineUserConfig({
           children: [
             'cortex.md',
             'RAG.md',
-            'Context Engineering.md',
+            'RL repo.md',
+            'survey.md'
           ],
         },
       ]
