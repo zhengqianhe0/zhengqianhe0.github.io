@@ -11,12 +11,24 @@ tag:
 
 # 强化学习开源框架
 
-verl https://github.com/volcengine/verl
+## 前言
 
-多模态 https://github.com/hiyouga/EasyR1 基于verl
+强化学习框架的存在意义
 
-TTRL https://github.com/PRIME-RL/TTRL
 
-# 前言
 
-强化学习框架
+## VERL
+
+https://github.com/volcengine/verl
+
+
+
+## EasyR1
+
+https://github.com/hiyouga/EasyR1 多模态，基于verl调整
+
+
+
+## TTRL
+
+https://github.com/PRIME-RL/TTRL
