@@ -10,7 +10,7 @@ tag:
 
 # RAG方法与思路总结
 
-# 0 基本流程回顾
+## 基本流程回顾
 
 知识库-向量化（文本切块）
 
@@ -18,9 +18,13 @@ tag:
 
 上下文学习-生成（预设提示词，temperature）
 
-# 1 关键点记录
+🎉**常看常新：2025年CCF-A主会RAG论文**
 
-## 1.1 代码code的RAG
+https://www.notion.so/RAG-2025-2270b854c75b808fb90dec88c4ed1140
+
+## 1 关键点记录
+
+### 1.1 代码code的RAG
 
 常见的切分方法：按照函数块切分，按照内部的逻辑块例如循环切分，混合切分并使用部分重叠。
 
@@ -40,7 +44,7 @@ https://github.com/yilinjz/astchunk
 
 cursor如何回答关于项目结构的问题？结构化表示项目目录，搜索可能存在的readme文档
 
-### Cursor的代码库索引
+#### Cursor的代码库索引
 
 https://mp.weixin.qq.com/s/QAV5dTNBbBqeUfMP6qAN5A
 
@@ -52,7 +56,7 @@ Cursor首先在本地将代码库文件分割成语义上有意义的块，启�
 
 《**[代码RAG第二弹：代码类的GraphRAG怎么做？一个示例项目](https://mp.weixin.qq.com/s?__biz=MzAxMjc3MjkyMg==&mid=2648421306&idx=1&sn=ac93f33cc8e1aa6a9b1722c2534b2554&scene=21#wechat_redirect)**》
 
-## 1.2 多模态GraphRAG
+### 1.2 多模态GraphRAG
 
 https://mp.weixin.qq.com/s/UtSjX_D2k-Cp7iJT-CNqtQ
 
@@ -90,7 +94,17 @@ https://arxiv.org/pdf/2509.10467
 
 设计了一个复杂的工作流，处理文档的逻辑结构（directory），一级多模态元素（文本/图像/表格）
 
-## 1.3 Deep Research进展
+#### 构建图的多种思路
+
+可以从实体触发，可以从query出发，也可以从chunk出发。
+
+《**Query-Centric Graph Retrieval Augmented Generation**》(https://arxiv.org/pdf/2509.21237) 华为团队
+
+核心的思路是**Doc2Query**生成基于文本块的查询-答案对，然后**构建查询中心图**（QCG），最后采用**多跳检索机制**从图中筛选相关文本块，最终送LLM做生成。
+
+问题在于应用场景十分受限，每个chunk都生成QA对，计算量和索引量都非常大。
+
+### 1.3 Deep Research进展
 
 商业与非商业的实现的总结 https://arxiv.org/pdf/2506.12594
 
@@ -116,7 +130,7 @@ https://arxiv.org/pdf/2509.10467
 
 未来研究方向：高级推理架构，多模态集成，领域特化，基于人机协作的标准化
 
-## 1.4 Embedding模型进展
+### 1.4 Embedding模型进展
 
 https://mp.weixin.qq.com/s/HYd2EkU01O3IgQn2ENaEkw
 
@@ -146,7 +160,7 @@ RAG流程：
 - 预处理：知识库切块，利用embedding模型向量化
 - RAG：问题向量化，余弦相似度匹配初步召回，重排序top-n，合并查询上下文构造prompt，生成
 
-### 一个趋势：小参数的embedding模型
+#### 一个趋势：小参数的embedding模型
 
 Google的Embedding Gemma-308M模型，支持100+语言，输出嵌入维度大小可选。
 
@@ -168,7 +182,7 @@ Google的Embedding Gemma-308M模型，支持100+语言，输出嵌入维度大�
 
 小模型应用场景：高响应速度需求、端侧部署
 
-## 1.5 文档智能专题
+### 1.5 文档智能专题
 
 https://mp.weixin.qq.com/s/QAV5dTNBbBqeUfMP6qAN5A
 
@@ -179,7 +193,7 @@ https://mp.weixin.qq.com/s/QAV5dTNBbBqeUfMP6qAN5A
 
 过去的典型项目：https://mp.weixin.qq.com/s/5852Kn8wVlsSGpclrjkBNA，涉及RAGflow（企业级领域知识库RAG问答工作流搭建解决方案），MinerU（专长于PDF分析）等， 提供了很多细节的文档解析功能。
 
-### 数据构建
+#### 数据构建
 
 文档解析模型，布局检测、多模态解析模型，都可以用到大模型训练语料的处理当中。
 
@@ -189,7 +203,33 @@ https://huggingface.co/datasets/HuggingFaceFW/finepdfs
 
 构造过程中集成了OCR，布局检测，语言识别，hash去重，姓名隐私化处理等，还训练了单独的xgboost模型用于需求检测与分类。
 
-## 1.6 多模态RAG
+#### 面向文档布局优化的多模态文档
+
+《**Logics-Parsing: An End-to-end Document Parsing Model with Layout-centric Reinforcement Learning**》，https://github.com/alibaba/Logics-Parsing，https://arxiv.org/pdf/2509.19760
+
+在解决复杂文档问答问题时，对于报纸、poster等多列多图的多模态资源，布局分析与阅读顺序是优化的一个方向。
+
+采用：
+
+面向多任务的SFT（布局分析、内容提取、分类、逻辑解析）
+
++面向布局的RL（文字提取效果、布局分析准确率、阅读顺序）
+
+#### 多模态长文档RAG
+
+https://mp.weixin.qq.com/s/O6qWnWJ9HnfaYDTM3DKGUQ
+
+##### 检索技术
+
+《A Survey of Long-Document Retrieval in the PLM and LLM Era》，https://arxiv.org/pdf/2509.07759 苏州大学
+
+##### benchmark
+
+《**VisR-Bench: An Empirical Study on Visual Retrieval-Augmented Generation for Multilingual Long Document Understanding**》，https://arxiv.org/pdf/2508.07493，https://github.com/puar-playground/VisR-Bench
+
+建模真实场景中多语言、多页的长文档检索任务，整理了常见的相关数据集与基线模型
+
+### 1.6 多模态RAG
 
 https://mp.weixin.qq.com/s/BbT0XCGbjwJ6mXb2EuVyGg
 
@@ -209,9 +249,9 @@ https://mp.weixin.qq.com/s/BbT0XCGbjwJ6mXb2EuVyGg
 - 文档智能方面，还是使用OCR+PDF解析提取文本，按页保存为图像，生成文本和视觉表示
 - 实现过程中，分别用两个检索器进行检索，agent各自分工处理文本和多模态，最终整合
 
-### 评估数据集
+#### 评估数据集
 
-#### Double-Bench
+##### Double-Bench
 
 https://arxiv.org/pdf/2508.03644
 
@@ -229,7 +269,7 @@ https://arxiv.org/pdf/2508.03644
 
 **主流框架（如MDocAgent、ViDoRAG）倾向“有问必答”**，即便未检索到证据，仍生成推测性内容，过度自信。复杂框架（MDocAgent、ViDoRAG）因多智能体串行协调，推理时间是Colqwen-gen的4倍左右。
 
-### 一个小专题：非标准印刷体/问题图像的文档解析
+#### 一个小专题：非标准印刷体/问题图像的文档解析
 
 几何弯曲、阴影、污渍等变化直接影响layout与ocr的效果
 
@@ -241,7 +281,7 @@ https://arxiv.org/pdf/2508.03644
 
 https://github.com/ZZZHANG-jx/Recommendations-Document-Image-Processing
 
-## 1.7 prompt工程
+### 1.7 prompt工程
 
 RAG落地过程中prompt也是很重要的一环。
 
@@ -254,7 +294,7 @@ https://github.com/asgeirtj/system_prompts_leaks/  各大主流大模型的系�
 - emotion prompt： Are you sure？ This is very important to me.
   - PUA类：你确定？相信你的能力。你要将这个困难挑战视为成长机会
 
-### 腾讯混元 PromptEnhancer
+#### 腾讯混元 PromptEnhancer
 
 https://www.arxiv.org/pdf/2509.04545
 
@@ -267,7 +307,7 @@ https://www.arxiv.org/pdf/2509.04545
 
 总结：**无论是做改写，还是做生成，都是需要有反馈，有reward，先sft，后grpo做强化，是目前常用策略**。
 
-## 1.8 Memory上下文管理
+### 1.8 Memory上下文管理
 
 对于agent，常见的上下文管理包括：
 
@@ -278,7 +318,7 @@ https://www.arxiv.org/pdf/2509.04545
 
 记忆管理的榜单：https://github.com/NevaMind-AI/memU memu方法准确度最高，但单词检索需要1s，更不用说需要把检索结果用于大模型再生成内容。
 
-## 1.9 RAG+科研：UltraRAG
+### 1.9 RAG+科研：UltraRAG / FlashRAG
 
 https://mp.weixin.qq.com/s/LEtuEKtZyiUqd1pdHW1XBA
 
@@ -288,7 +328,13 @@ https://github.com/OpenBMB/UltraRAG
 
 使用方法：利用现有的组件，编写yaml配置文件，实现串行并行，分支循环，内置常用数据集
 
-## 1.10 GraphRAG的应用与落地
+https://github.com/RUC-NLPIR/FlashRAG
+
+定位：快速复现现有RAG框架
+
+使用方法：可视化界面操作
+
+### 1.10 GraphRAG的应用与落地
 
 集成式RAG框架，https://github.com/apecloud/ApeRAG/ 在lightRAG（实体抽取、关系抽取、实体合并）基础上，使用了向量搜索和全文关键词搜索，并且以MinerU辅助进行文档解析。整体上是工程的优化，例如实现了知识图谱的隔离，可以做多租户。
 
@@ -299,7 +345,7 @@ GraphRAG落地的工程难题：
 - 实体合并与去重的准确性挑战，需要强大的上下文理解能力，尤其在专业领域内不能出错
 - 依赖项较多：MinerU，LLM，图数据库，向量数据库，全文搜索引擎
 
-### 专题：知识抽取时的schema
+#### 专题：知识抽取时的schema
 
 Schema 指的是对图中实体（Entity）、关系（Relation）和属性（Attribute）的预先定义的结构化模式或本体（Ontology）。抽取前，事先明确定义好允许的实体类别（如 Person, Organization, Product）和关系类型（如 works_for, located_in, develops），抽取过程必须遵循这个预设框架。
 
@@ -307,11 +353,11 @@ Schema 指的是对图中实体（Entity）、关系（Relation）和属性（At
 
 为什么主流GraphRAG（如LightRAG）选择“无Schema”？因为graphrag中的kg，其实作用做bridge的作用，也就是做锚点用，所以要尽可能的多，也无需要太多限制。GraphRAG并不追求构建一个完美的、可用于独立问答的知识库，而是服务于**下游检索任务**。只要这些节点能帮助用户从A跳到C（即使B有点噪声），它的目的就达到了。
 
-## 1.11 RAG加速
+### 1.11 RAG加速
 
 Meta的工作，REFRAG（REpresentation For RAG）RAG解码框架，用了一个“压缩-感知-扩展”策略减少冗余计算，为工程策略。
 
-## 1.12 Chunk切分策略
+### 1.12 Chunk切分策略
 
 Is Semantic Chunking Worth the Computational Cost?  https://arxiv.org/pdf/2410.13070
 
@@ -336,13 +382,13 @@ Is Semantic Chunking Worth the Computational Cost?  https://arxiv.org/pdf/2410.1
 8. 层次分块：和文档结构很像，但更需要层次的依赖关系，不只依赖文件格式（第一段，第二段），还依赖章节结构（摘要，引言，方法）
 9. adaptive：根据文档的内容动态调整参数（如chunk大小，overlap大小）。需要专门的模型判断，较少用
 
-## 1.13 RAG+信息论
+### 1.13 RAG+信息论
 
 结合信息论计算RAG召回过程中的理论上界（数学基础）。目标：召回的top-k，定这个k，使得总信息量最大
 
 **Chunk相关性最大化的动态TOP-K策略** https://arxiv.org/pdf/2509.04820
 
-### **信息增益** 
+#### **信息增益** 
 
 摸到了应用中基于信息论评估的边界，但仍缺少严格的形式化证明。具体的AAAI审稿时一篇关于文档噪声的证明可借鉴
 
@@ -353,7 +399,7 @@ https://arxiv.org/pdf/2509.12765
 - 定义量化指标DIG：量化检索文档对正确答案生成的贡献，通过计算“有无该文档时LLM生成置信度的差值”（结合查询x与文档di时，LLM生成正确答案y的置信度，减去仅基于查询x时，LLM生成正确答案y的置信度）。
 - 训练一个多任务重排序器，基于**RoBERTa-large**，训练数据先区分query的难度，得到打分数据
 
-## 1.14 RAG+强化学习
+### 1.14 RAG+强化学习
 
 **ReSearch** https://arxiv.org/pdf/2503.19470 
 
@@ -386,7 +432,7 @@ ReSearch 是一种通过强化学习训练 LLMs 实现 “推理与搜索融合�
 - 框架具备强泛化性，单一数据集训练（MuSiQue）可适配多种多跳任务（HotpotQA，2Wiki等）；
 - 训练过程中自然涌现反思、自我纠错等高级推理能力，无需预定义启发式规则。
 
-## 1.15 召回策略
+### 1.15 召回策略
 
 https://arxiv.org/pdf/2509.04820
 
@@ -404,9 +450,15 @@ Fishing for Answers: Exploring One-shot vs. Iterative Retrieval Strategies for R
 
 成本可控，简单补丁，贴近落地。
 
-## 1.16 ToG系列（周庚显）
+### 1.16 ToG系列
 
-### 对比基线：多轮RAG专题
+#### ToG1与2阅读
+
+总结对比：
+
+
+
+#### 对比基线：多轮RAG专题
 
 RAT(https://arxiv.org/pdf/2403.05313)、
 Interactive-KBQA（https://arxiv.org/abs/2402.15131）、
@@ -424,7 +476,7 @@ RAG在上下文管理上面临着问题，而以上论文诞生于多轮RAG即�
 
 2025 年主流的**Agentic RAG**（智能体驱动的自主检索规划）与**Context Engineering**（上下文的系统化设计与优化），已从 “检索策略自主性”“上下文管理精细化”“系统架构扩展性” 三个维度实现技术突破，三篇早期工作的局限性主要体现在以下方面：
 
-#### 1. 检索决策机制：从 “被动触发” 到 “自主规划” 的代差（Agentic RAG 视角）
+##### 1. 检索决策机制：从 “被动触发” 到 “自主规划” 的代差（Agentic RAG 视角）
 
 三篇工作的检索决策均依赖**预定义规则**，缺乏 Agentic RAG 的 “自主判断与规划能力”，具体表现为：
 
@@ -432,7 +484,7 @@ RAG在上下文管理上面临着问题，而以上论文诞生于多轮RAG即�
 - **Interactive-KBQA 的工具选择固化**：强制使用预定义的 3 类 KB 工具，并局限于静态KG
 - **RAT 的检索流程机械**：对每个思维步骤强制检索，缺乏 Agentic RAG 的 “检索结果评估与重检机制”。例如检索到错误的 Minecraft 合成配方时，RAT 会直接用错误知识修正 CoT，而 Agentic RAG 会评估 “检索结果与任务的相关性”，自动发起二次检索直至获取准确信息。
 
-#### 2. 上下文管理：从 “简单拼接” 到 “系统化工程” 的不足（Context Engineering 视角）
+##### 2. 上下文管理：从 “简单拼接” 到 “系统化工程” 的不足（Context Engineering 视角）
 
 三篇工作均将上下文视为 “检索结果的直接拼接”，未践行 Context Engineering 的 “优化、压缩、结构化” 理念，导致上下文效率与质量不足：
 
@@ -440,23 +492,66 @@ RAG在上下文管理上面临着问题，而以上论文诞生于多轮RAG即�
 - **多模态与多源信息适配缺失**：三篇工作均局限于 “文本类检索结果”，无法像 Context Engineering 那样整合 “表格、图像、数据库数据” 等多模态信息。例如回答 “某产品参数对比” 时，Interactive-KBQA 无法检索并结构化表格数据，只能依赖文本描述，而现代系统可通过多模态处理器将表格转为结构化上下文。
 - **上下文与指令的协同不足**：三篇工作仅将检索结果作为 “补充知识”，未像 Context Engineering 那样将 “推理思维模板、输出格式要求、用户角色信息” 与知识融合为结构化提示。例如生成专业法律摘要时，无法像现代系统那样在上下文中嵌入 “法律术语规范、判决案例引用格式” 等指令，导致输出质量依赖模型自身能力。
 
-#### 3. 系统架构：从 “单模块耦合” 到 “多智能体协同” 的局限
+##### 3. 系统架构：从 “单模块耦合” 到 “多智能体协同” 的局限
 
 三篇工作均为 “单 LLM + 单检索模块” 的耦合架构，无法适配 Agentic RAG 的 “多智能体协作” 需求：
 
 - **缺乏专业化分工**：例如处理 “跨领域复杂问题”（如 “分析某药企新药的专利状态与临床数据”）时，RAT 需独自完成 “问题拆解、专利检索、临床数据检索、推理修正” 全流程，而 Agentic RAG 可分配 “专利智能体、医疗数据智能体、推理智能体” 协同工作，效率与准确性显著提升。
 - **无持久化记忆机制**：三篇工作均为 “无状态系统”，无法像 Agentic RAG 那样通过 “短期对话记忆 + 长期知识记忆” 复用历史信息。例如多轮对话中重复询问 “CBS 持股相关问题” 时，Interactive-KBQA 会重新执行完整检索流程，而 Agentic RAG 可直接调用记忆中的历史检索结果，降低冗余开销。
 
-#### 4. 技术定位：从 “核心方案” 到 “组件化工具” 的角色转变
+##### 4. 技术定位：从 “核心方案” 到 “组件化工具” 的角色转变
 
 随着**长上下文模型**（如 GPT-4o、Claude 3.5，窗口达 1M tokens）的普及，三篇工作的核心场景已被部分替代：
 
 - **FLARE 的长文本生成场景弱化**：长上下文模型可直接读取全文生成摘要，无需 FLARE 的 “分段生成 + 逐句检索” 流程，仅在小模型（如 Mistral-7B）场景仍有价值。
 - **RAT 的 CoT 修正需求降低**：大模型自身的思维链能力已显著提升，结合长上下文可直接生成更准确的 CoT，RAT 的 “分步检索修正” 仅在低参模型或超复杂推理（如数学定理证明）中必要。
 
-#### 总结：过时性的本质与价值留存
+##### 总结：过时性的本质与价值留存
 
 三篇工作的 “过时性” 并非技术失效，而是**技术定位从 “前沿方案” 退化为 “基础组件”**：
 
 - 其 “多轮动态检索” 的核心思想仍是 Agentic RAG 的基础，但检索决策、上下文管理等环节需与 “自主规划、系统化工程、多智能体协作” 深度融合；
 - 在**小模型落地、静态知识库问答、低资源场景**等领域，三者的设计仍具实用价值 —— 例如 FLARE 的置信度触发逻辑可作为 Agentic RAG 的 “轻量级检索模块”，Interactive-KBQA 的人工干预机制可用于构建高质量 Agent 训练数据。
+
+
+
+#### 1.17 刘焕勇 CCKS报告
+
+https://mp.weixin.qq.com/s?__biz=MzAxMjc3MjkyMg==&mid=2648423217&idx=1&sn=3205a735b04fa23b9c94780682a008a4&chksm=8266620c383f3f2953e8eb80202a0906b99e2fd8480113432f1b028cb7705cd286029665cf3e&scene=0&xtrack=1&subscene=90#rd
+
+**《面向“搜、问、推、写”应用场景的文档解析及知识库建设实践》**
+
+总结为关于知识库及RAG落地的十条建议，是个方法论和方向的指引：
+
+1. 不要为了上RAG而上RAG，尤其是NL2SQL,KBQA这种类型，之前解决的很好的就不要再折腾了。
+2. 不要为了上变体而上变体，GraphRAG、多模态RAG、DeepResearch等能不上就不上，把最基本RAG做出来就好。
+3. 通用的RAG是一种标品，标品从来都解决不了优化问题，要放弃这种思路。
+4. RAG本身就是破布，是面向具体业务问题而做的补丁，要有这种意识，面向业务做RAG，而不是面向RAG做业务，具体case 具体分析，评估先行，可用的RAG一定是有很多路由逻辑的。
+5. 目前开源的RAG框架有很多，其意义其实并不是为了生产，而是为了快速做场景验证，要做开源框架祛魅
+6. 能自己动手写就动手写，RAG没多少复杂的东西，开源框架同质化，黑盒化，不利于做问题定位，要适当抛弃；
+7. RAG本身就是无处不在的，它是一种框架，而不是一种单独的技术，更多时候还是一种工程架构
+8. 决定RAG好不好用的，不是RAG技术本身，而在于用户的问题域是否建模清楚，以及业务实现逻辑的设计。
+9. 落地总是二八原则，很多优化方案都是解决20%长尾问题而设计，这个需要清楚，需要衡量ROI投入产出比；
+10. RAG的文档解析要做，但并不需要文档解析做到100%还原，这是一条歧路。应该投入，但不要过度关注。文档解析是手段，不是目的。
+
+另外：
+
+**1、GraphRAG中的“KG”不是“KG”**
+
+GraphRAG里抽取图谱的目的是做索引，做锚点，做关联，能连上就行，所以，不要跟做专门抽取的混为一谈，也可以不抽实体和关系。GraphRAG还是专注在做问答任务，说白了还是RAG，不是ie任务，它背后还是用llm做的抽取、索引和关联。
+
+为什么graphrag通常做抽取不带schema?，定不出来（业务难），定出来太少（太少bridge的作用不够），定出来太大（抽取难度大，上下文爆炸），也就是没也不好，太少也不好，太多也不好，很主观。
+
+**2、GraphRAG的跳转作用可以用于复杂推理数据合成**
+
+复杂推理任务，核心特征是需要多跳，Graph中的关联关系天然的给出了数据输入。目前，这块是提升大模型推理能力的一个重要方向。
+
+**DeepDive**(https://arxiv.org/pdf/2509.10446)，通过开放知识图谱自动合成含“模糊实体”的复杂问题，构建深度搜索问答数据集。
+
+**MedResearcher-R1**(https://arxiv.org/abs/2508.14880)，通过医学知识图谱生成复杂的多跳问答
+
+2023年大模型落地，有三驾马车【文档解析+知识图谱+大模型】
+
+2025年变成新的三驾马车【知识图谱+强化学习+大模型】
+
+三者的关系是：**通过知识图谱来增强LLM的RL能力，使之能更好地利用知识图谱本身，解决领域知识推理问题**。
