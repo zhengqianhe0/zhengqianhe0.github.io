@@ -454,9 +454,22 @@ Fishing for Answers: Exploring One-shot vs. Iterative Retrieval Strategies for R
 
 #### ToG1与2阅读
 
+ToG是agent智能体范式下的主要论文工作
+
 总结对比：
 
-
+| 对比维度         | Think-on-Graph (ToG, ICLR 2024)                              | Think-on-Graph 2.0 (ToG 2.0, ICLR 2025)                      |
+| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **核心解决问题** | 1. LLM 仅依赖内部知识，易产生幻觉、无法处理多跳推理；2. 传统 “LLM⊕KG” 松散耦合，LLM 不参与图推理，依赖 KG 完整性；3. 推理过程无追溯性，无法修正错误 | 1. 文本基 RAG 无法捕捉实体结构化关系，KG 基 RAG 缺乏细粒度文本上下文；2. 松散混合 RAG（如 CoK、GraphRAG）仅聚合信息，未优化检索；3. 复杂任务需深度整合结构化与非结构化知识 |
+| **现有方案缺陷** | 1. LLM-only（CoT/SC）：无外部知识支撑，多跳推理能力弱；2. LLM⊕KG（StructGPT/KB-BINDER）：LLM 仅转查询，KG 缺失关系则失效；3. 无知识追溯与修正机制 | 1. 文本 RAG（Vanilla RAG）：依赖语义相似性，忽略实体关联；2. KG RAG（ToG）：缺乏实体文本细节，无法补充 KG 空白；3. 松散混合 RAG：无跨源检索优化，多跳效率低 |
+| **核心技术范式** | “LLM⊗KG” 紧耦合范式（LLM 作为 Agent 参与 KG 推理）           | “KG×Text” 紧耦合混合 RAG 范式（KG 引导文本检索，文本优化 KG 剪枝） |
+| **主要实现方法** | 1. 三阶段流程：- 初始化：LLM 提取 Top-N 主题实体；- 探索：beam search 迭代 “关系检索 - LLM 剪枝 - 实体检索 - LLM 剪枝”；- 推理：LLM 评估路径充足性，生成答案；2. 变体 ToG-R：以 “关系链” 替代三元组，随机剪枝实体降本 | 1. 四阶段流程：- 初始化：实体提取 + 文档片段检索，初判是否直接回答；- 图检索：KG 关系剪枝→候选实体检索；- 文本检索：三元组转语句 + DRM 计算文本相关性，剪枝实体；- 推理：LLM 结合三元组与文本评估，生成线索优化查询；2. 批量处理关系选择，DRM 替代 LLM 剪枝提效 |
+| **知识源类型**   | 仅结构化知识图谱（如 Freebase、Wikidata）                    | 混合知识源：- 结构化：KG（Wikidata 等）；- 非结构化：Wikipedia 文档、领域文本（如金融财报） |
+| **关键创新点**   | 1. LLM 动态探索 KG 路径，不依赖预定义检索策略；2. 显式推理路径，支持知识追溯与 KG 修正；3. 多路径 beam search 提升正确答案概率 | 1. 跨源检索优化：KG 缩小文本检索范围，文本补充 KG 实体细节；2. 上下文增强实体排序：结合问题、三元组、文本降歧义；3. 迭代深度检索：按实体限制语料规模，降噪声提效 |
+| **效率优化手段** | 1. ToG-R 随机剪枝实体，减少 LLM 调用；2. 固定 beam width（N=3）与 depth（D=3）平衡性能与成本 | 1. 关系剪枝批量处理，减少 LLM 调用；2. DRM（如 BGE-Reranker）替代 LLM 剪枝实体；3. 主题修剪、查询优化减少无效探索 |
+| **核心优势**     | 1. 多跳推理能力强，处理 KG 信息不完整场景；2. 推理透明可追溯，支持错误修正；3. 即插即用，兼容不同 LLM/KG | 1. 深度整合跨源知识，复杂任务（多跳文档 QA、领域推理）性能优；2. 小模型（如 Llama3-8B）结合后可媲美 GPT-3.5；3. 效率高于 ToG，实体剪枝时间仅为 ToG 的 68.7% |
+| **实验核心结果** | 1. GPT-4+ToG 在 6/9 数据集（如 WebQSP、GrailQA）达 SOTA；2. Llama2-70B+ToG 媲美 GPT-4 直接推理；3. CWQ 数据集准确率 69.5%，超基线 20%+ | 1. GPT-3.5+ToG 2.0 在 6/7 数据集（如 WebQSP、AdvHotpotQA）达 SOTA；2. WebQSP 准确率 81.1%（超 ToG 4.93%），AdvHotpotQA 准确率 42.9%（超 SOTA 5.51%）；3. 金融 ToG-FinQA 准确率 34.0%，远超 GraphRAG（6.2%） |
+| **适用场景**     | 知识密集型单源推理任务：多跳 KBQA、事实核查、槽填充          | 复杂跨源推理任务：多跳文档 QA、领域专属推理（如金融）、需细粒度文本补充的 KG 推理 |
 
 #### 对比基线：多轮RAG专题
 
@@ -555,4 +568,35 @@ GraphRAG里抽取图谱的目的是做索引，做锚点，做关联，能连上
 2025年变成新的三驾马车【知识图谱+强化学习+大模型】
 
 三者的关系是：**通过知识图谱来增强LLM的RL能力，使之能更好地利用知识图谱本身，解决领域知识推理问题**。
+
+
+
+### 1.18 RAG结合GNN
+
+图神经网络GNN：能够结合图的结构信息和文本的语义信息统一表示。
+
+https://mp.weixin.qq.com/s/2vA2KdD9pgfZmUaVM3GE2w
+
+《**G-reasoner: Foundation Models for Unified Reasoning over Graph-structured Knowledge**》(https://arxiv.org/pdf/2509.24276，https://rmanluo.github.io/gfm-rag/latest/)
+
+统一了图的接口，定义图的四层结构（节点属性，结构化三元素，非结构化文本，全局分组）
+
+统一不同知识图谱的图结构要素G=(V,E,R,T,S)
+
+训练了一个能够阅读图信息的模型
+
+
+
+### 1.19 GraphRAG的缺点与未来优化方向
+
+- 一般Graph都是离线构建，无法随用随更新？
+  - 简单解决方案：定期更新，知识库数据范围有限
+  - 在回答时进行子问题拆解，过程中判断是否需要实时更新图谱《**StepChain GraphRAG: Reasoning OverKnowledge Graphs for Multi-Hop Question Answering**》(https://arxiv.org/pdf/2510.02827)
+
+- 检索时是一次检索，如果没有找到需要的文档/找到的文档排序不理想？
+  - 现有检索方法，尤其是HippoRAG在常见的多跳问答上已经能做到较好的召回，但是生成效果有限
+  - 采用迭代检索的策略进行补充：迭代思考要进行良好的控制，简单问题容易陷入循环过度思考，复杂问题容易找不到相关的证据文档DeepResearch。针对GraphRAG与对应的迭代式方法，论文《**BEYOND STATIC RETRIEVAL: OPPORTUNITIES AND PITFALLS OF ITERATIVE RETRIEVAL IN GRAPHRAG**》（https://arxiv.org/pdf/2509.25530）提出了“桥梁文档”的概念，即多跳任务的关键文档（本质上是图谱结构中有效的较长的证据链的中间实体与关系对应的三元组）。
+    - 推理时的迭代策略：IRCOT，IRGS（根据生成的答案片段寻找缺口），TOG，GCOT
+    - 基于图的检索结构：HippoRAG2，GraphRAG，RAPTOR，GFM-RAG
+    - 两两组合做实验。同时，提出方法BDTR，目的是找到桥梁文档，构造完整证据，并引导检索
 

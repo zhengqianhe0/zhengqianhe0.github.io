@@ -9,18 +9,52 @@ tag:
   - GraphRAG
 ---
 
-# RAG idea激发
+# RAG 总结
 
 
 
 ## NeocorRAG论文投稿总结
 
-相关新工作整理
+RAG流程较复杂，但大致可以分为以下几个步骤：
 
-https://mp.weixin.qq.com/s/6Y-jpBHKeZNRyd79P2rRcg
+- 从知识域内召回
+  - 结构增强
+  - 推理增强
 
-https://arxiv.org/pdf/2509.25530
+- 召回结果的处理
+  - 重排序
+  - 转化成证据链
 
+- 大模型利用文本生成
+  - 直接式
+  - 迭代式
 
+本文的核心：现有RAG系统已经能够较好的完成召回，但是在生成时候却不能较好的回答。浅层原因是召回时的深层证据未能够被识别，深层原因是召回文本不能很好的被大模型上下文处理。因此，NeocorRAG通过图的方式充分挖掘候选证据空间（充分识别），并构造证据链以筛选文档用于提示大模型。
 
-https://mp.weixin.qq.com/s/2vA2KdD9pgfZmUaVM3GE2w
+### GraphRAG专题
+
+三个核心问题：
+
+#### 图构建
+
+RAPTOR：基于文档摘要递归构建树形结构
+
+SiReRAG：结合相关性与相似度的树状
+
+Microsoft GraphRAG：大模型做三元组抽取+层次图结构
+
+LightRAG：双层图索引高效检索
+
+规范的知识图谱结构：HippoRAG（2）使用OpenIE进行KG构建；KAG通过schema概念推理与人工标注整理专家知识
+
+#### 图增强推理
+
+图直接检索：HippoRAG结合KG与文档实现高质量召回
+
+基于智能体打分与迭代：ToG2交互式的从KG与文档中检索信息并推理
+
+图神经网络融合结构和语义：GNN-RAG，G-retriever
+
+#### 评估
+
+多跳问答数据集：HotpotQA，Musique，2WikiMultihopQA
