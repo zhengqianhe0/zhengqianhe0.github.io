@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.20" />
+    <style>
+      :root {
+        --vp-c-bg: #fff;
+      }
+
+      [data-theme='dark'] {
+        --vp-c-bg: #1b1b1f;
+      }
+
+      html,
+      body {
+        background-color: var(--vp-c-bg);
+      }
+    </style>
+    <script>
+      const useChoice = localStorage.getItem('vuepress-color-scheme')
+      const systemStatus =
+        'matchMedia' in window
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false
+
+      if (useChoice === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (useChoice === 'dark' || systemStatus) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+    <title>Tag 哈希表 | 郑千鹤的博客</title><meta name="description" content="哦耶">
+    <link rel="preload" href="/assets/style-QXEKf4Y2.css" as="style"><link rel="stylesheet" href="/assets/style-QXEKf4Y2.css">
+    <link rel="modulepreload" href="/assets/app-Cyjh_AJQ.js"><link rel="modulepreload" href="/assets/index.html-C4NIBjDP.js">
+    <link rel="prefetch" href="/assets/index.html-Bu5sLGnV.js" as="script"><link rel="prefetch" href="/assets/get-started.html-Dx5tXcPr.js" as="script"><link rel="prefetch" href="/assets/RAG.html-BOmG-9fO.js" as="script"><link rel="prefetch" href="/assets/RAG_paper.html-BV2OyE1z.js" as="script"><link rel="prefetch" href="/assets/RL repo.html-rnk-ZCoh.js" as="script"><link rel="prefetch" href="/assets/THU LLM lecture.html-CAE4sGU5.js" as="script"><link rel="prefetch" href="/assets/cortex.html-B4_X27AJ.js" as="script"><link rel="prefetch" href="/assets/d2l.html-D6G-yZqV.js" as="script"><link rel="prefetch" href="/assets/survey.html-BGOEsjcT.js" as="script"><link rel="prefetch" href="/assets/20250728.html-BDF8PeMX.js" as="script"><link rel="prefetch" href="/assets/20250729.html-D9KkOr9V.js" as="script"><link rel="prefetch" href="/assets/20250730.html-DLvVnp6B.js" as="script"><link rel="prefetch" href="/assets/20250731.html-DdJAEgie.js" as="script"><link rel="prefetch" href="/assets/20250801.html-CUuZQPN7.js" as="script"><link rel="prefetch" href="/assets/20250802.html-JZpNBxxW.js" as="script"><link rel="prefetch" href="/assets/20250803.html-CLI5ck3V.js" as="script"><link rel="prefetch" href="/assets/20250804.html-DHA8UAmM.js" as="script"><link rel="prefetch" href="/assets/20250805.html-Bz6Rxya-.js" as="script"><link rel="prefetch" href="/assets/20250806.html-BdYukJTF.js" as="script"><link rel="prefetch" href="/assets/20250807.html-CMTxT15M.js" as="script"><link rel="prefetch" href="/assets/20250808.html-ouI2Kfha.js" as="script"><link rel="prefetch" href="/assets/20250809.html-C5IX8sZI.js" as="script"><link rel="prefetch" href="/assets/20250810.html-D70gdZT5.js" as="script"><link rel="prefetch" href="/assets/20250811.html-DZJGq8JX.js" as="script"><link rel="prefetch" href="/assets/20250812.html-ByBw7MaW.js" as="script"><link rel="prefetch" href="/assets/20250813.html-DaqVzIZ7.js" as="script"><link rel="prefetch" href="/assets/20250814.html-pHlqke2q.js" as="script"><link rel="prefetch" href="/assets/20250815.html-BV93_Uf3.js" as="script"><link rel="prefetch" href="/assets/20250816.html-DTN112yT.js" as="script"><link rel="prefetch" href="/assets/20250817.html-9YNkQmWu.js" as="script"><link rel="prefetch" href="/assets/20250818.html-CG1NMjLT.js" as="script"><link rel="prefetch" href="/assets/20250819.html-CFuTzA1g.js" as="script"><link rel="prefetch" href="/assets/20250820.html-B2OYC6EL.js" as="script"><link rel="prefetch" href="/assets/20250821.html-Bhohx4Tg.js" as="script"><link rel="prefetch" href="/assets/20250822.html-Cu-2FhWR.js" as="script"><link rel="prefetch" href="/assets/20250823.html-BD8LeJ9t.js" as="script"><link rel="prefetch" href="/assets/20250824.html-DMFcOo41.js" as="script"><link rel="prefetch" href="/assets/20250825.html-t8mbS3rg.js" as="script"><link rel="prefetch" href="/assets/20250826.html-BAuS4_c7.js" as="script"><link rel="prefetch" href="/assets/20250827.html-C9atSg0y.js" as="script"><link rel="prefetch" href="/assets/20250828.html-Brutx8Qf.js" as="script"><link rel="prefetch" href="/assets/20250829.html-TE1Po7bi.js" as="script"><link rel="prefetch" href="/assets/20250830.html-C0-r5U0b.js" as="script"><link rel="prefetch" href="/assets/20250831.html-CS_MCi1j.js" as="script"><link rel="prefetch" href="/assets/20250901.html-B8jr4qQs.js" as="script"><link rel="prefetch" href="/assets/20250902.html-DIWlBgKJ.js" as="script"><link rel="prefetch" href="/assets/20250903.html-CISj9cVA.js" as="script"><link rel="prefetch" href="/assets/20250904.html-hh72tTjB.js" as="script"><link rel="prefetch" href="/assets/20250905.html-CF0GDEkN.js" as="script"><link rel="prefetch" href="/assets/20250906.html-B5-GAaDi.js" as="script"><link rel="prefetch" href="/assets/20250907.html-BBonaDRN.js" as="script"><link rel="prefetch" href="/assets/20250908.html-B5bWifBb.js" as="script"><link rel="prefetch" href="/assets/20250909.html-C8BE65Yk.js" as="script"><link rel="prefetch" href="/assets/20250910.html-CWeSu1mK.js" as="script"><link rel="prefetch" href="/assets/20250911.html-S3sbmDla.js" as="script"><link rel="prefetch" href="/assets/20250912.html-DG3-iJTj.js" as="script"><link rel="prefetch" href="/assets/20250913.html-BkqqKDfW.js" as="script"><link rel="prefetch" href="/assets/20250914.html-Cqv9R0Yh.js" as="script"><link rel="prefetch" href="/assets/20250915.html-CLyOb0ZS.js" as="script"><link rel="prefetch" href="/assets/20250916.html-D_LfmVrI.js" as="script"><link rel="prefetch" href="/assets/20250917.html-mHWjSgba.js" as="script"><link rel="prefetch" href="/assets/20250918.html-BP8g3hDH.js" as="script"><link rel="prefetch" href="/assets/20250919.html-KdDJrBl9.js" as="script"><link rel="prefetch" href="/assets/20250920.html-DBoRpKKp.js" as="script"><link rel="prefetch" href="/assets/20250921.html-DC6cwRKP.js" as="script"><link rel="prefetch" href="/assets/20250922.html-B3EnLKuJ.js" as="script"><link rel="prefetch" href="/assets/20250923.html-CnTPfrW5.js" as="script"><link rel="prefetch" href="/assets/20250924.html-EIsWB_qW.js" as="script"><link rel="prefetch" href="/assets/20250925.html-XnWDf_H6.js" as="script"><link rel="prefetch" href="/assets/20250926.html-C5D4GheT.js" as="script"><link rel="prefetch" href="/assets/20250927.html-QgWDZGYT.js" as="script"><link rel="prefetch" href="/assets/20250928.html-LGVbRIxZ.js" as="script"><link rel="prefetch" href="/assets/20250929.html-C1W7chaf.js" as="script"><link rel="prefetch" href="/assets/20250930.html-Duqmcq0R.js" as="script"><link rel="prefetch" href="/assets/20251001.html-X1SGAJv2.js" as="script"><link rel="prefetch" href="/assets/20251002.html-B69SE8nB.js" as="script"><link rel="prefetch" href="/assets/20251003.html-BsJUQzc4.js" as="script"><link rel="prefetch" href="/assets/20251004.html-Bu9jlo_l.js" as="script"><link rel="prefetch" href="/assets/20251005.html-BptOae6l.js" as="script"><link rel="prefetch" href="/assets/20251006.html-CLFrtuot.js" as="script"><link rel="prefetch" href="/assets/20251007.html-Dc2hrIbh.js" as="script"><link rel="prefetch" href="/assets/20251008.html-DpDy-ISd.js" as="script"><link rel="prefetch" href="/assets/20251009.html-cCTlnq8G.js" as="script"><link rel="prefetch" href="/assets/20251010.html-Bm3Nyauv.js" as="script"><link rel="prefetch" href="/assets/20251011.html-CwUI_oTi.js" as="script"><link rel="prefetch" href="/assets/20251012.html-29NGwZJr.js" as="script"><link rel="prefetch" href="/assets/20251013.html-CF9JmpW3.js" as="script"><link rel="prefetch" href="/assets/20251014.html-D9jtuT7m.js" as="script"><link rel="prefetch" href="/assets/20251015.html-DmUWBEod.js" as="script"><link rel="prefetch" href="/assets/20251016.html-CS6q-tTh.js" as="script"><link rel="prefetch" href="/assets/20251017.html-CJiqW-At.js" as="script"><link rel="prefetch" href="/assets/20251018.html-DiRTn43_.js" as="script"><link rel="prefetch" href="/assets/20251019.html-uqwp3EV3.js" as="script"><link rel="prefetch" href="/assets/20251020.html-hyz-CsvJ.js" as="script"><link rel="prefetch" href="/assets/20251021.html-C_Wnv6nd.js" as="script"><link rel="prefetch" href="/assets/20251022.html-CFbNp-Be.js" as="script"><link rel="prefetch" href="/assets/20251023.html-DIVyLU0q.js" as="script"><link rel="prefetch" href="/assets/20251024.html-BXKLlX_A.js" as="script"><link rel="prefetch" href="/assets/20251025.html-Bch_AW9P.js" as="script"><link rel="prefetch" href="/assets/20251026.html-B2SBvls2.js" as="script"><link rel="prefetch" href="/assets/20251027.html-Bd-bEFbv.js" as="script"><link rel="prefetch" href="/assets/20251028.html-Bq_PYSzC.js" as="script"><link rel="prefetch" href="/assets/20251029.html-DSFXpR2N.js" as="script"><link rel="prefetch" href="/assets/20251030.html-BmoiH6MY.js" as="script"><link rel="prefetch" href="/assets/20251031.html-BRGhwOI9.js" as="script"><link rel="prefetch" href="/assets/20251101.html-BPPj9c--.js" as="script"><link rel="prefetch" href="/assets/20251102.html-BAcZOJil.js" as="script"><link rel="prefetch" href="/assets/20251103.html-Dk2t66c9.js" as="script"><link rel="prefetch" href="/assets/20251104.html-AvlJG3aV.js" as="script"><link rel="prefetch" href="/assets/20251105.html-C3rKx7cq.js" as="script"><link rel="prefetch" href="/assets/20251106.html-CCc90-t5.js" as="script"><link rel="prefetch" href="/assets/20251107.html-BhGYappO.js" as="script"><link rel="prefetch" href="/assets/20251108.html-DuZVLUL5.js" as="script"><link rel="prefetch" href="/assets/20251109.html-DPsxkcQl.js" as="script"><link rel="prefetch" href="/assets/20251110.html-_Op72ptD.js" as="script"><link rel="prefetch" href="/assets/20251111.html-O5asYBX5.js" as="script"><link rel="prefetch" href="/assets/20251112.html-B9yJ0slH.js" as="script"><link rel="prefetch" href="/assets/20251113.html-CmItp3-B.js" as="script"><link rel="prefetch" href="/assets/20251114.html-GqHELISv.js" as="script"><link rel="prefetch" href="/assets/20251115.html-CDgXS6L8.js" as="script"><link rel="prefetch" href="/assets/20251116.html-DAbxdrnI.js" as="script"><link rel="prefetch" href="/assets/20251117.html-p0oNmanw.js" as="script"><link rel="prefetch" href="/assets/20251118.html-g5wQD_r4.js" as="script"><link rel="prefetch" href="/assets/20251119.html-D5c1wvvA.js" as="script"><link rel="prefetch" href="/assets/archive1.html-B24vOPKa.js" as="script"><link rel="prefetch" href="/assets/archive2.html-D98vdrvB.js" as="script"><link rel="prefetch" href="/assets/article1.html-Dyv7k87S.js" as="script"><link rel="prefetch" href="/assets/article10.html-CXPKV0kH.js" as="script"><link rel="prefetch" href="/assets/article11.html-BHTNsFvS.js" as="script"><link rel="prefetch" href="/assets/article12.html-v9csEd_R.js" as="script"><link rel="prefetch" href="/assets/article2.html-DC21654K.js" as="script"><link rel="prefetch" href="/assets/article3.html-D3a86Sfg.js" as="script"><link rel="prefetch" href="/assets/article4.html-CO6-9D8i.js" as="script"><link rel="prefetch" href="/assets/article5.html-Ck3dT4cR.js" as="script"><link rel="prefetch" href="/assets/article6.html-ByoIFtYx.js" as="script"><link rel="prefetch" href="/assets/article7.html-BZ2W9Hca.js" as="script"><link rel="prefetch" href="/assets/article8.html-C1xIPnPi.js" as="script"><link rel="prefetch" href="/assets/article9.html-Bvjo3LNY.js" as="script"><link rel="prefetch" href="/assets/sticky.html-DsmIRfM8.js" as="script"><link rel="prefetch" href="/assets/sticky2.html-3O-7jmBN.js" as="script"><link rel="prefetch" href="/assets/404.html-CrlWCDPx.js" as="script"><link rel="prefetch" href="/assets/index.html-DpGnymGx.js" as="script"><link rel="prefetch" href="/assets/index.html-Bo5qDron.js" as="script"><link rel="prefetch" href="/assets/index.html-miBF6rHI.js" as="script"><link rel="prefetch" href="/assets/index.html-Cf3oZEE1.js" as="script"><link rel="prefetch" href="/assets/index.html-CBG5A8AL.js" as="script"><link rel="prefetch" href="/assets/index.html-CtB2lWxx.js" as="script"><link rel="prefetch" href="/assets/index.html-FiIEldoR.js" as="script"><link rel="prefetch" href="/assets/index.html-DJ3lpsIt.js" as="script"><link rel="prefetch" href="/assets/index.html-D6Duqa4n.js" as="script"><link rel="prefetch" href="/assets/index.html-C_hwiCrF.js" as="script"><link rel="prefetch" href="/assets/index.html-Dd_bR8Z6.js" as="script"><link rel="prefetch" href="/assets/index.html-C5GM8a79.js" as="script"><link rel="prefetch" href="/assets/index.html-CDDn8ZMU.js" as="script"><link rel="prefetch" href="/assets/index.html-CP0vo9mn.js" as="script"><link rel="prefetch" href="/assets/index.html-rCU2dwsy.js" as="script"><link rel="prefetch" href="/assets/index.html-B4Ch9FdC.js" as="script"><link rel="prefetch" href="/assets/index.html-pF60eveH.js" as="script"><link rel="prefetch" href="/assets/index.html-CgQaUyGl.js" as="script"><link rel="prefetch" href="/assets/index.html-BXID_Xd8.js" as="script"><link rel="prefetch" href="/assets/index.html-DEmAmpgL.js" as="script"><link rel="prefetch" href="/assets/index.html-A9fxNYly.js" as="script"><link rel="prefetch" href="/assets/index.html-Dz9zFdBI.js" as="script"><link rel="prefetch" href="/assets/index.html-BiJi7pH-.js" as="script"><link rel="prefetch" href="/assets/index.html-Dkp3G-Xa.js" as="script"><link rel="prefetch" href="/assets/index.html-y7fdfkss.js" as="script"><link rel="prefetch" href="/assets/index.html-BR7J4WYI.js" as="script"><link rel="prefetch" href="/assets/index.html-DEKJgfhd.js" as="script"><link rel="prefetch" href="/assets/index.html-BJ_zlCZF.js" as="script"><link rel="prefetch" href="/assets/index.html-D2ZPsqt7.js" as="script"><link rel="prefetch" href="/assets/index.html-COXpiMV7.js" as="script"><link rel="prefetch" href="/assets/index.html-CfJ6QohY.js" as="script"><link rel="prefetch" href="/assets/index.html-CenEyWre.js" as="script"><link rel="prefetch" href="/assets/index.html-CkpwplEh.js" as="script"><link rel="prefetch" href="/assets/index.html-CGMMuCL7.js" as="script"><link rel="prefetch" href="/assets/index.html-Du9mxRKB.js" as="script"><link rel="prefetch" href="/assets/index.html-B-9qe-Pa.js" as="script"><link rel="prefetch" href="/assets/index.html-D2MRMmUm.js" as="script"><link rel="prefetch" href="/assets/index.html-B8NXFgKP.js" as="script"><link rel="prefetch" href="/assets/index.html-8R3AIdWf.js" as="script"><link rel="prefetch" href="/assets/index.html-BLWbygsZ.js" as="script"><link rel="prefetch" href="/assets/index.html-BE4RlQRa.js" as="script"><link rel="prefetch" href="/assets/index.html-BcSsVitj.js" as="script"><link rel="prefetch" href="/assets/index.html-DOZx24DN.js" as="script"><link rel="prefetch" href="/assets/index.html-C4aDt7fr.js" as="script"><link rel="prefetch" href="/assets/index.html-C3Y8bV8o.js" as="script"><link rel="prefetch" href="/assets/index.html-BWDV6t_z.js" as="script"><link rel="prefetch" href="/assets/index.html-CHyrsfIj.js" as="script"><link rel="prefetch" href="/assets/index.html-8HtA1kx6.js" as="script"><link rel="prefetch" href="/assets/index.html-pbVVUm9S.js" as="script"><link rel="prefetch" href="/assets/index.html-Cwxc8uCH.js" as="script"><link rel="prefetch" href="/assets/index.html-Bc20pDcl.js" as="script"><link rel="prefetch" href="/assets/index.html-D1GDsmmH.js" as="script"><link rel="prefetch" href="/assets/index.html-CFeQc9A1.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="vp-theme-container no-sidebar external-link-icon" vp-container><!--[--><header class="vp-navbar" vp-navbar><div class="vp-toggle-sidebar-button" title="toggle sidebar" aria-expanded="false" role="button" tabindex="0"><div class="icon" aria-hidden="true"><span></span><span></span><span></span></div></div><span><a class="route-link" href="/"><img class="vp-site-logo" src="https://tse4.mm.bing.net/th/id/OIP.bFujutx-gmwcey8Ey2YB8wHaHa?r=0&amp;rs=1&amp;pid=ImgDetMain&amp;o=7&amp;rm=3" alt="郑千鹤的博客"><span class="vp-site-name vp-hide-mobile" aria-hidden="true">郑千鹤的博客</span></a></span><div class="vp-navbar-items-wrapper" style=""><!--[--><!--]--><nav class="vp-navbar-items vp-hide-mobile" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/" aria-label="个人主页"><!--[--><!--[--><!--]--><!--]-->个人主页<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/article/" aria-label="Article"><!--[--><!--[--><!--]--><!--]-->Article<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/category/leetcode%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" aria-label="Category"><!--[--><!--[--><!--]--><!--]-->Category<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/tag/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" aria-label="Tag"><!--[--><!--[--><!--]--><!--]-->Tag<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/timeline/" aria-label="Timeline"><!--[--><!--[--><!--]--><!--]-->Timeline<!--[--><!--[--><!--]--><!--]--></a></div><!--]--></nav><!--[--><!--]--><button type="button" class="vp-toggle-color-mode-button" title="toggle color mode"><svg class="light-icon" viewbox="0 0 32 32" style=""><path d="M16 12.005a4 4 0 1 1-4 4a4.005 4.005 0 0 1 4-4m0-2a6 6 0 1 0 6 6a6 6 0 0 0-6-6z" fill="currentColor"></path><path d="M5.394 6.813l1.414-1.415l3.506 3.506L8.9 10.318z" fill="currentColor"></path><path d="M2 15.005h5v2H2z" fill="currentColor"></path><path d="M5.394 25.197L8.9 21.691l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 25.005h2v5h-2z" fill="currentColor"></path><path d="M21.687 23.106l1.414-1.415l3.506 3.506l-1.414 1.414z" fill="currentColor"></path><path d="M25 15.005h5v2h-5z" fill="currentColor"></path><path d="M21.687 8.904l3.506-3.506l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 2.005h2v5h-2z" fill="currentColor"></path></svg><svg class="dark-icon" viewbox="0 0 32 32" style="display:none;"><path d="M13.502 5.414a15.075 15.075 0 0 0 11.594 18.194a11.113 11.113 0 0 1-7.975 3.39c-.138 0-.278.005-.418 0a11.094 11.094 0 0 1-3.2-21.584M14.98 3a1.002 1.002 0 0 0-.175.016a13.096 13.096 0 0 0 1.825 25.981c.164.006.328 0 .49 0a13.072 13.072 0 0 0 10.703-5.555a1.01 1.01 0 0 0-.783-1.565A13.08 13.08 0 0 1 15.89 4.38A1.015 1.015 0 0 0 14.98 3z" fill="currentColor"></path></svg></button><!----></div></header><!--]--><div class="vp-sidebar-mask"></div><!--[--><aside class="vp-sidebar" vp-sidebar><nav class="vp-navbar-items" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/" aria-label="个人主页"><!--[--><!--[--><!--]--><!--]-->个人主页<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/article/" aria-label="Article"><!--[--><!--[--><!--]--><!--]-->Article<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/category/leetcode%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" aria-label="Category"><!--[--><!--[--><!--]--><!--]-->Category<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/tag/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" aria-label="Tag"><!--[--><!--[--><!--]--><!--]-->Tag<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><a class="route-link auto-link" href="/timeline/" aria-label="Timeline"><!--[--><!--[--><!--]--><!--]-->Timeline<!--[--><!--[--><!--]--><!--]--></a></div><!--]--></nav><!--[--><!--]--><!----><!--[--><!--]--></aside><!--]--><!--[--><main class="page"><div class="tag-wrapper"><!--[--><a class="route-link tag" href="/tag/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型 <span class="tag-num">7</span></a><a class="route-link tag" href="/tag/rag/">RAG <span class="tag-num">2</span></a><a class="route-link tag" href="/tag/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90/">检索增强生成 <span class="tag-num">2</span></a><a class="route-link tag" href="/tag/graphrag/">GraphRAG <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">强化学习 <span class="tag-num">2</span></a><a class="route-link tag" href="/tag/%E6%A1%86%E6%9E%B6/">框架 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E5%B7%A5%E7%A8%8B/">工程 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/moe/">MoE <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/pytorch/">PyTorch <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/prompt/">Prompt <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E7%BB%BC%E8%BF%B0/">综述 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E5%9B%9E%E6%BA%AF/">回溯 <span class="tag-num">3</span></a><a class="route-link tag" href="/tag/dfs/">DFS <span class="tag-num">6</span></a><a class="route-link tag" href="/tag/%E4%BD%8D%E8%BF%90%E7%AE%97/">位运算 <span class="tag-num">13</span></a><a class="route-link tag" href="/tag/%E6%95%B0%E7%BB%84/">数组 <span class="tag-num">78</span></a><a class="route-link tag" href="/tag/%E5%8F%8D%E5%90%91%E9%81%8D%E5%8E%86/">反向遍历 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E8%84%91%E7%AD%8B%E6%80%A5%E8%BD%AC%E5%BC%AF/">脑筋急转弯 <span class="tag-num">2</span></a><a class="route-link tag" href="/tag/%E6%95%B0%E5%AD%A6/">数学 <span class="tag-num">38</span></a><a class="route-link tag" href="/tag/%E8%B4%AA%E5%BF%83/">贪心 <span class="tag-num">11</span></a><a class="route-link route-link-active tag" href="/tag/%E5%93%88%E5%B8%8C%E8%A1%A8/">哈希表 <span class="tag-num">29</span></a><a class="route-link tag" href="/tag/%E6%8E%92%E5%BA%8F/">排序 <span class="tag-num">12</span></a><a class="route-link tag" href="/tag/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">二分查找 <span class="tag-num">4</span></a><a class="route-link tag" href="/tag/%E5%89%8D%E7%BC%80%E5%92%8C/">前缀和 <span class="tag-num">10</span></a><a class="route-link tag" href="/tag/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">滑动窗口 <span class="tag-num">8</span></a><a class="route-link tag" href="/tag/%E7%9F%A9%E9%98%B5/">矩阵 <span class="tag-num">14</span></a><a class="route-link tag" href="/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划 <span class="tag-num">14</span></a><a class="route-link tag" href="/tag/%E6%A6%82%E7%8E%87/">概率 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E9%80%92%E5%BD%92/">递归 <span class="tag-num">2</span></a><a class="route-link tag" href="/tag/01%E8%83%8C%E5%8C%85/">01背包 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E6%A6%82%E7%8E%87%E4%B8%8E%E7%BB%9F%E8%AE%A1/">概率与统计 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E6%9E%9A%E4%B8%BE/">枚举 <span class="tag-num">4</span></a><a class="route-link tag" href="/tag/%E9%80%92%E6%8E%A8/">递推 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E6%A8%A1%E6%8B%9F/">模拟 <span class="tag-num">8</span></a><a class="route-link tag" href="/tag/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/">记忆化搜索 <span class="tag-num">2</span></a><a class="route-link tag" href="/tag/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">优先队列 <span class="tag-num">5</span></a><a class="route-link tag" href="/tag/%E9%98%9F%E5%88%97/">队列 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/">差分数组 <span class="tag-num">5</span></a><a class="route-link tag" href="/tag/%E5%B7%AE%E5%93%88%E5%B8%8C%E8%A1%A8/">差哈希表 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串 <span class="tag-num">19</span></a><a class="route-link tag" href="/tag/%E8%AE%BE%E8%AE%A1/">设计 <span class="tag-num">6</span></a><a class="route-link tag" href="/tag/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针 <span class="tag-num">4</span></a><a class="route-link tag" href="/tag/%E5%87%A0%E4%BD%95/">几何 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/bfs/">BFS <span class="tag-num">3</span></a><a class="route-link tag" href="/tag/%E6%95%B0%E8%AE%BA/">数论 <span class="tag-num">2</span></a><a class="route-link tag" href="/tag/%E9%93%BE%E8%A1%A8/">链表 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E6%A0%88/">栈 <span class="tag-num">1</span></a><a class="route-link tag" href="/tag/%E8%AE%A1%E6%95%B0/">计数 <span class="tag-num">1</span></a><!--]--></div><div class="article-wrapper"><!----><!--[--><article class="article"><header class="title">2154. 将找到的值乘以 2</header><hr><div class="article-info"><!----><span class="date">Date: 11/19/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 数组, 数学, 哈希表</span></div><div class="excerpt">
+<p>给你一个整数数组 <code>nums</code> ，另给你一个整数 <code>original</code> ，这是需要在 <code>nums</code> 中搜索的第一个数字。</p>
+<p>接下来，你需要按下述步骤操作：</p>
+<ol>
+<li>如果在 <code>nums</code> 中找到 <code>original</code> ，将 <code>original</code> <strong>乘以</strong> 2 ，得到新 <code>original</code>（即，令 <code>original = 2 * original</code>）。</li>
+<li>否则，停止这一过程。</li>
+<li>只要能在数组中找到新 <code>original</code> ，就对新 <code>original</code> 继续 <strong>重复</strong> 这一过程**。**</li>
+</ol></div></article><article class="article"><header class="title">3607. 电网维护</header><hr><div class="article-info"><!----><span class="date">Date: 11/6/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: DFS, 哈希表, 数组</span></div><div class="excerpt">
+<p>给你一个整数 <code>c</code>，表示 <code>c</code> 个电站，每个电站有一个唯一标识符 <code>id</code>，从 1 到 <code>c</code> 编号。</p>
+<p>这些电站通过 <code>n</code> 条 <strong>双向</strong> 电缆互相连接，表示为一个二维数组 <code>connections</code>，其中每个元素 <code>connections[i] = [ui, vi]</code> 表示电站 <code>ui</code> 和电站 <code>vi</code> 之间的连接。直接或间接连接的电站组成了一个 <strong>电网</strong> 。</p></div></article><article class="article"><header class="title">3321. 计算子数组的 x-sum II</header><hr><div class="article-info"><!----><span class="date">Date: 11/5/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 滑动窗口, 哈希表, 数组</span></div><div class="excerpt">
+<p>给你一个由 <code>n</code> 个整数组成的数组 <code>nums</code>，以及两个整数 <code>k</code> 和 <code>x</code>。</p>
+<p>数组的 <strong>x-sum</strong> 计算按照以下步骤进行：</p>
+<ul>
+<li>统计数组中所有元素的出现次数。</li>
+<li>仅保留出现频率最高的前 <code>x</code> 种元素。如果两种元素的出现次数相同，则数值 <strong>较大</strong> 的元素被认为出现次数更多。</li>
+<li>计算结果数组的和。</li>
+</ul>
+<p><strong>注意</strong>，如果数组中的不同元素少于 <code>x</code> 个，则其 <strong>x-sum</strong> 是数组的元素总和。</p></div></article><article class="article"><header class="title">3318. 计算子数组的 x-sum I</header><hr><div class="article-info"><!----><span class="date">Date: 11/4/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 滑动窗口, 哈希表, 数组</span></div><div class="excerpt">
+<p>给你一个由 <code>n</code> 个整数组成的数组 <code>nums</code>，以及两个整数 <code>k</code> 和 <code>x</code>。</p>
+<p>数组的 <strong>x-sum</strong> 计算按照以下步骤进行：</p>
+<ul>
+<li>统计数组中所有元素的出现次数。</li>
+<li>仅保留出现次数最多的前 <code>x</code> 个元素的每次出现。如果两个元素的出现次数相同，则数值 <strong>较大</strong> 的元素被认为出现次数更多。</li>
+<li>计算结果数组的和。</li>
+</ul>
+<p><strong>注意</strong>，如果数组中的不同元素少于 <code>x</code> 个，则其 <strong>x-sum</strong> 是数组的元素总和。</p></div></article><article class="article"><header class="title">3289. 数字小镇中的捣蛋鬼</header><hr><div class="article-info"><!----><span class="date">Date: 10/31/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 数组, 哈希表</span></div><div class="excerpt">
+<p>数字小镇 Digitville 中，存在一个数字列表 <code>nums</code>，其中包含从 <code>0</code> 到 <code>n - 1</code> 的整数。每个数字本应 <strong>只出现一次</strong>，然而，有 <strong>两个</strong> 顽皮的数字额外多出现了一次，使得列表变得比正常情况下更长。</p>
+<p>为了恢复 Digitville 的和平，作为小镇中的名侦探，请你找出这两个顽皮的数字。</p>
+<p>返回一个长度为 2 的数组，包含这两个数字（顺序任意）。</p>
+<p><strong>示例 1：</strong></p></div></article><article class="article"><header class="title">1716. 计算力扣银行的钱</header><hr><div class="article-info"><!----><span class="date">Date: 10/25/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 哈希表, 枚举, 数学</span></div><div class="excerpt">
+<p>Hercy 想要为购买第一辆车存钱。他 <strong>每天</strong> 都往力扣银行里存钱。</p>
+<p>最开始，他在周一的时候存入 <code>1</code> 块钱。从周二到周日，他每天都比前一天多存入 <code>1</code> 块钱。在接下来每一个周一，他都会比 <strong>前一个周一</strong> 多存入 <code>1</code> 块钱。</p>
+<p>给你 <code>n</code> ，请你返回在第 <code>n</code> 天结束的时候他在力扣银行总共存了多少块钱。</p>
+<p><strong>示例 1：</strong></p>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：n = 4</span>
+<span class="line">输出：10</span>
+<span class="line">解释：第 4 天后，总额为 1 + 2 + 3 + 4 = 10 。</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></article><article class="article"><header class="title">2048. 下一个更大的数值平衡数</header><hr><div class="article-info"><!----><span class="date">Date: 10/24/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 哈希表, 枚举, 数学</span></div><div class="excerpt">
+<p>如果整数 <code>x</code> 满足：对于每个数位 <code>d</code> ，这个数位 <strong>恰好</strong> 在 <code>x</code> 中出现 <code>d</code> 次。那么整数 <code>x</code> 就是一个 <strong>数值平衡数</strong> 。</p>
+<p>给你一个整数 <code>n</code> ，请你返回 <strong>严格大于</strong> <code>n</code> 的 <strong>最小数值平衡数</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：n = 1</span>
+<span class="line">输出：22</span>
+<span class="line">解释：</span>
+<span class="line">22 是一个数值平衡数，因为：</span>
+<span class="line">- 数字 2 出现 2 次 </span>
+<span class="line">这也是严格大于 1 的最小数值平衡数。</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></article><article class="article"><header class="title">2598. 执行操作后的最大 MEX</header><hr><div class="article-info"><!----><span class="date">Date: 10/16/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 哈希表, 贪心, 数组, 数学</span></div><div class="excerpt">
+<p>给你一个下标从 <strong>0</strong> 开始的整数数组 <code>nums</code> 和一个整数 <code>value</code> 。</p>
+<p>在一步操作中，你可以对 <code>nums</code> 中的任一元素加上或减去 <code>value</code> 。</p>
+<ul>
+<li>例如，如果 <code>nums = [1,2,3]</code> 且 <code>value = 2</code> ，你可以选择 <code>nums[0]</code> 减去 <code>value</code> ，得到 <code>nums = [-1,2,3]</code> 。</li>
+</ul></div></article><article class="article"><header class="title">2273. 移除字母异位词后的结果数组</header><hr><div class="article-info"><!----><span class="date">Date: 10/13/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 哈希表, 字符串, 数组, 排序</span></div><div class="excerpt">
+<p>给你一个下标从 <strong>0</strong> 开始的字符串 <code>words</code> ，其中 <code>words[i]</code> 由小写英文字符组成。</p>
+<p>在一步操作中，需要选出任一下标 <code>i</code> ，从 <code>words</code> 中 <strong>删除</strong> <code>words[i]</code> 。其中下标 <code>i</code> 需要同时满足下述两个条件：</p>
+<ol>
+<li><code>0 &lt; i &lt; words.length</code></li>
+<li><code>words[i - 1]</code> 和 <code>words[i]</code> 是 <strong>字母异位词</strong> 。</li>
+</ol></div></article><article class="article"><header class="title">3186. 施咒的最大总伤害</header><hr><div class="article-info"><!----><span class="date">Date: 10/11/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 二分查找, 哈希表, 数组, 双指针</span></div><div class="excerpt">
+<p>一个魔法师有许多不同的咒语。</p>
+<p>给你一个数组 <code>power</code> ，其中每个元素表示一个咒语的伤害值，可能会有多个咒语有相同的伤害值。</p>
+<p>已知魔法师使用伤害值为 <code>power[i]</code> 的咒语时，他们就 <strong>不能</strong> 使用伤害为 <code>power[i] - 2</code> ，<code>power[i] - 1</code> ，<code>power[i] + 1</code> 或者 <code>power[i] + 2</code> 的咒语。</p>
+<p>每个咒语最多只能被使用 <strong>一次</strong> 。</p></div></article><article class="article"><header class="title">1488. 避免洪水泛滥</header><hr><div class="article-info"><!----><span class="date">Date: 10/7/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 贪心, 数组, 哈希表, 优先队列</span></div><div class="excerpt">
+<p>你的国家有无数个湖泊，所有湖泊一开始都是空的。当第 <code>n</code> 个湖泊下雨前是空的，那么它就会装满水。如果第 <code>n</code> 个湖泊下雨前是 <strong>满的</strong> ，这个湖泊会发生 <strong>洪水</strong> 。你的目标是避免任意一个湖泊发生洪水。</p>
+<p>给你一个整数数组 <code>rains</code> ，其中：</p>
+<ul>
+<li><code>rains[i] &gt; 0</code> 表示第 <code>i</code> 天时，第 <code>rains[i]</code> 个湖泊会下雨。</li>
+<li><code>rains[i] == 0</code> 表示第 <code>i</code> 天没有湖泊会下雨，你可以选择 <strong>一个</strong> 湖泊并 <strong>抽干</strong> 这个湖泊的水。</li>
+</ul></div></article><article class="article"><header class="title">166. 分数到小数</header><hr><div class="article-info"><!----><span class="date">Date: 9/24/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 字符串, 哈希表, 数学</span></div><div class="excerpt">
+<p>给定两个整数，分别表示分数的分子 <code>numerator</code> 和分母 <code>denominator</code>，以 <strong>字符串形式返回小数</strong> 。</p>
+<p>如果小数部分为循环小数，则将循环的部分括在括号内。</p>
+<p>如果存在多个答案，只需返回 <strong>任意一个</strong> 。</p>
+<p>对于所有给定的输入，<strong>保证</strong> 答案字符串的长度小于 <code>104</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：numerator = 1, denominator = 2</span>
+<span class="line">输出："0.5"</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div></div></div></div></article><article class="article"><header class="title">3005. 最大频率元素计数</header><hr><div class="article-info"><!----><span class="date">Date: 9/22/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 哈希表, 数组</span></div><div class="excerpt">
+<p>给你一个由 <strong>正整数</strong> 组成的数组 <code>nums</code> 。</p>
+<p>返回数组 <code>nums</code> 中所有具有 <strong>最大</strong> 频率的元素的 <strong>总频率</strong> 。</p>
+<p>元素的 <strong>频率</strong> 是指该元素在数组中出现的次数。</p>
+<p><strong>示例 1：</strong></p>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：nums = [1,2,2,3,1,4]</span>
+<span class="line">输出：4</span>
+<span class="line">解释：元素 1 和 2 的频率为 2 ，是数组中的最大频率。</span>
+<span class="line">因此具有最大频率的元素在数组中的数量是 4 。</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></article><article class="article"><header class="title">1912. 设计电影租借系统</header><hr><div class="article-info"><!----><span class="date">Date: 9/21/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 设计, 哈希表, 数组, 优先队列</span></div><div class="excerpt">
+<p>你有一个电影租借公司和 <code>n</code> 个电影商店。你想要实现一个电影租借系统，它支持查询、预订和返还电影的操作。同时系统还能生成一份当前被借出电影的报告。</p>
+<p>所有电影用二维整数数组 <code>entries</code> 表示，其中 <code>entries[i] = [shopi, moviei, pricei]</code> 表示商店 <code>shopi</code> 有一份电影 <code>moviei</code> 的拷贝，租借价格为 <code>pricei</code> 。每个商店有 <strong>至多一份</strong> 编号为 <code>moviei</code> 的电影拷贝。</p></div></article><article class="article"><header class="title">3508. 设计路由器</header><hr><div class="article-info"><!----><span class="date">Date: 9/20/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 设计, 哈希表, 数组, 优先队列</span></div><div class="excerpt">
+<p>请你设计一个数据结构来高效管理网络路由器中的数据包。每个数据包包含以下属性：</p>
+<ul>
+<li><code>source</code>：生成该数据包的机器的唯一标识符。</li>
+<li><code>destination</code>：目标机器的唯一标识符。</li>
+<li><code>timestamp</code>：该数据包到达路由器的时间戳。</li>
+</ul>
+<p>实现 <code>Router</code> 类：</p>
+<p><code>Router(int memoryLimit)</code>：初始化路由器对象，并设置固定的内存限制。</p>
+<ul>
+<li><code>memoryLimit</code> 是路由器在任意时间点可以存储的 <strong>最大</strong> 数据包数量。</li>
+<li>如果添加一个新数据包会超过这个限制，则必须移除 <strong>最旧的</strong> 数据包以腾出空间。</li>
+</ul></div></article><article class="article"><header class="title">3484. 设计电子表格</header><hr><div class="article-info"><!----><span class="date">Date: 9/19/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 设计, 哈希表</span></div><div class="excerpt">
+<p>电子表格是一个网格，它有 26 列（从 <code>'A'</code> 到 <code>'Z'</code>）和指定数量的 <code>rows</code>。每个单元格可以存储一个 0 到 105 之间的整数值。</p>
+<p>请你实现一个 <code>Spreadsheet</code> 类：</p>
+<ul>
+<li><code>Spreadsheet(int rows)</code> 初始化一个具有 26 列（从 <code>'A'</code> 到 <code>'Z'</code>）和指定行数的电子表格。所有单元格最初的值都为 0 。</li>
+<li><code>void setCell(String cell, int value)</code> 设置指定单元格的值。单元格引用以 <code>"AX"</code> 的格式提供（例如，<code>"A1"</code>，<code>"B10"</code>），其中字母表示列（从 <code>'A'</code> 到 <code>'Z'</code>），数字表示从 <strong>1</strong> 开始的行号。</li>
+<li><code>void resetCell(String cell)</code> 重置指定单元格的值为 0 。</li>
+<li><code>int getValue(String formula)</code> 计算一个公式的值，格式为 <code>"=X+Y"</code>，其中 <code>X</code> 和 <code>Y</code> <strong>要么</strong> 是单元格引用，要么非负整数，返回计算的和。</li>
+</ul></div></article><article class="article"><header class="title">3408. 设计任务管理器</header><hr><div class="article-info"><!----><span class="date">Date: 9/18/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 设计, 哈希表</span></div><div class="excerpt">
+<p>一个任务管理器系统可以让用户管理他们的任务，每个任务有一个优先级。这个系统需要高效地处理添加、修改、执行和删除任务的操作。</p>
+<p>请你设计一个 <code>TaskManager</code> 类：</p>
+<ul>
+<li><code>TaskManager(vector&lt;vector&lt;int&gt;&gt;&amp; tasks)</code> 初始化任务管理器，初始化的数组格式为 <code>[userId, taskId, priority]</code> ，表示给 <code>userId</code> 添加一个优先级为 <code>priority</code> 的任务 <code>taskId</code> 。</li>
+<li><code>void add(int userId, int taskId, int priority)</code> 表示给用户 <code>userId</code> 添加一个优先级为 <code>priority</code> 的任务 <code>taskId</code> ，输入 <strong>保证</strong> <code>taskId</code> 不在系统中。</li>
+<li><code>void edit(int taskId, int newPriority)</code> 更新已经存在的任务 <code>taskId</code> 的优先级为 <code>newPriority</code> 。输入 <strong>保证</strong> <code>taskId</code> 存在于系统中。</li>
+<li><code>void rmv(int taskId)</code> 从系统中删除任务 <code>taskId</code> 。输入 <strong>保证</strong> <code>taskId</code> 存在于系统中。</li>
+<li><code>int execTop()</code> 执行所有用户的任务中优先级 <strong>最高</strong> 的任务，如果有多个任务优先级相同且都为 <strong>最高</strong> ，执行 <code>taskId</code> 最大的一个任务。执行完任务后，<code>taskId</code> 从系统中 <strong>删除</strong> 。同时请你返回这个任务所属的用户 <code>userId</code> 。如果不存在任何任务，返回 -1 。</li>
+</ul></div></article><article class="article"><header class="title">2349. 设计数字容器系统</header><hr><div class="article-info"><!----><span class="date">Date: 9/17/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 设计, 哈希表</span></div><div class="excerpt">
+<p>设计一个数字容器系统，可以实现以下功能：</p>
+<ul>
+<li>在系统中给定下标处 <strong>插入</strong> 或者 <strong>替换</strong> 一个数字。</li>
+<li><strong>返回</strong> 系统中给定数字的最小下标。</li>
+</ul>
+<p>请你实现一个 <code>NumberContainers</code> 类：</p>
+<ul>
+<li><code>NumberContainers()</code> 初始化数字容器系统。</li>
+<li><code>void change(int index, int number)</code> 在下标 <code>index</code> 处填入 <code>number</code> 。如果该下标 <code>index</code> 处已经有数字了，那么用 <code>number</code> 替换该数字。</li>
+<li><code>int find(int number)</code> 返回给定数字 <code>number</code> 在系统中的最小下标。如果系统中没有 <code>number</code> ，那么返回 <code>-1</code> 。</li>
+</ul></div></article><article class="article"><header class="title">2197. 替换数组中的非互质数</header><hr><div class="article-info"><!----><span class="date">Date: 9/16/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 字符串, 哈希表, 数组</span></div><div class="excerpt">
+<p>给你一个整数数组 <code>nums</code> 。请你对数组执行下述操作：</p>
+<ol>
+<li>从 <code>nums</code> 中找出 <strong>任意</strong> 两个 <strong>相邻</strong> 的 <strong>非互质</strong> 数。</li>
+<li>如果不存在这样的数，<strong>终止</strong> 这一过程。</li>
+<li>否则，删除这两个数，并 <strong>替换</strong> 为它们的 <strong>最小公倍数</strong>（Least Common Multiple，LCM）。</li>
+<li>只要还能找出两个相邻的非互质数就继续 <strong>重复</strong> 这一过程。</li>
+</ol></div></article><article class="article"><header class="title">1935. 可以输入的最大单词数</header><hr><div class="article-info"><!----><span class="date">Date: 9/15/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 字符串, 哈希表, 数组</span></div><div class="excerpt">
+<p>已解答</p>
+<p>简单</p>
+<p>相关标签</p>
+<p><img src="https://static.leetcode.cn/cn-frontendx-assets/production/_next/static/images/lock-a6627e2c7fa0ce8bc117c109fb4e567d.svg" alt="premium lock icon">相关企业</p>
+<p>提示</p>
+<p>键盘出现了一些故障，有些字母键无法正常工作。而键盘上所有其他键都能够正常工作。</p>
+<p>给你一个由若干单词组成的字符串 <code>text</code> ，单词间由单个空格组成（不含前导和尾随空格）；另有一个字符串 <code>brokenLetters</code> ，由所有已损坏的不同字母键组成，返回你可以使用此键盘完全输入的 <code>text</code> 中单词的数目。</p></div></article><article class="article"><header class="title">966. 元音拼写检查器</header><hr><div class="article-info"><!----><span class="date">Date: 9/14/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 字符串, 哈希表, 数组</span></div><div class="excerpt">
+<p>在给定单词列表 <code>wordlist</code> 的情况下，我们希望实现一个拼写检查器，将查询单词转换为正确的单词。</p>
+<p>对于给定的查询单词 <code>query</code>，拼写检查器将会处理两类拼写错误：</p>
+<ul>
+<li>
+<p>大小写：如果查询匹配单词列表中的某个单词（</p>
+<p>不区分大小写</p>
+<p>），则返回的正确单词与单词列表中的大小写相同。</p>
+<ul>
+<li>例如：<code>wordlist = ["yellow"]</code>, <code>query = "YellOw"</code>: <code>correct = "yellow"</code></li>
+<li>例如：<code>wordlist = ["Yellow"]</code>, <code>query = "yellow"</code>: <code>correct = "Yellow"</code></li>
+<li>例如：<code>wordlist = ["yellow"]</code>, <code>query = "yellow"</code>: <code>correct = "yellow"</code></li>
+</ul>
+</li>
+<li>
+<p>元音错误：如果在将查询单词中的元音</p>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">('a', 'e', 'i', 'o', 'u')</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>分别替换为任何元音后，能与单词列表中的单词匹配（</p>
+<p>不区分大小写</p>
+<p>），则返回的正确单词与单词列表中的匹配项大小写相同。</p>
+<ul>
+<li>例如：<code>wordlist = ["YellOw"]</code>, <code>query = "yollow"</code>: <code>correct = "YellOw"</code></li>
+<li>例如：<code>wordlist = ["YellOw"]</code>, <code>query = "yeellow"</code>: <code>correct = ""</code> （无匹配项）</li>
+<li>例如：<code>wordlist = ["YellOw"]</code>, <code>query = "yllw"</code>: <code>correct = ""</code> （无匹配项）</li>
+</ul>
+</li>
+</ul></div></article><article class="article"><header class="title">3541. 找到频率最高的元音和辅音</header><hr><div class="article-info"><!----><span class="date">Date: 9/13/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 字符串, 哈希表</span></div><div class="excerpt">
+<p>给你一个由小写英文字母（<code>'a'</code> 到 <code>'z'</code>）组成的字符串 <code>s</code>。你的任务是找出出现频率 <strong>最高</strong> 的元音（<code>'a'</code>、<code>'e'</code>、<code>'i'</code>、<code>'o'</code>、<code>'u'</code> 中的一个）和出现频率<strong>最高</strong>的辅音（除元音以外的所有字母），并返回这两个频率之和。</p>
+<p><strong>注意</strong>：如果有多个元音或辅音具有相同的最高频率，可以任选其中一个。如果字符串中没有元音或没有辅音，则其频率视为 0。</p></div></article><article class="article"><header class="title">37. 解数独</header><hr><div class="article-info"><!----><span class="date">Date: 8/31/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 数组, 矩阵, 哈希表, 回溯</span></div><div class="excerpt">
+<p>编写一个程序，通过填充空格来解决数独问题。</p>
+<p>数独的解法需 <strong>遵循如下规则</strong>：</p>
+<ol>
+<li>数字 <code>1-9</code> 在每一行只能出现一次。</li>
+<li>数字 <code>1-9</code> 在每一列只能出现一次。</li>
+<li>数字 <code>1-9</code> 在每一个以粗实线分隔的 <code>3x3</code> 宫内只能出现一次。（请参考示例图）</li>
+</ol>
+<p>数独部分空格内已填入了数字，空白格用 <code>'.'</code> 表示。</p>
+<p><strong>示例 1：</strong></p></div></article><article class="article"><header class="title">36. 有效的数独</header><hr><div class="article-info"><!----><span class="date">Date: 8/30/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 数组, 矩阵, 哈希表</span></div><div class="excerpt">
+<p>请你判断一个 <code>9 x 9</code> 的数独是否有效。只需要 <strong>根据以下规则</strong> ，验证已经填入的数字是否有效即可。</p>
+<ol>
+<li>数字 <code>1-9</code> 在每一行只能出现一次。</li>
+<li>数字 <code>1-9</code> 在每一列只能出现一次。</li>
+<li>数字 <code>1-9</code> 在每一个以粗实线分隔的 <code>3x3</code> 宫内只能出现一次。（请参考示例图）</li>
+</ol>
+<p><strong>注意：</strong></p>
+<ul>
+<li>一个有效的数独（部分已被填充）不一定是可解的。</li>
+<li>只需要根据以上规则，验证已经填入的数字是否有效即可。</li>
+<li>空白格用 <code>'.'</code> 表示。</li>
+</ul></div></article><article class="article"><header class="title">869. 重新排序得到 2 的幂</header><hr><div class="article-info"><!----><span class="date">Date: 8/10/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 哈希表, 数组</span></div><div class="excerpt">
+<p>给定正整数 <code>n</code> ，我们按任何顺序（包括原始顺序）将数字重新排序，注意其前导数字不能为零。</p>
+<p>如果我们可以通过上述方式得到 2 的幂，返回 <code>true</code>；否则，返回 <code>false</code>。</p>
+<p><strong>示例 1：</strong></p>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：n = 1</span>
+<span class="line">输出：true</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div></div></div></div></article><article class="article"><header class="title">3477. 水果成篮 II</header><hr><div class="article-info"><!----><span class="date">Date: 8/6/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 哈希表, 数组, 滑动窗口</span></div><div class="excerpt">
+<p>给你两个长度为 <code>n</code> 的整数数组，<code>fruits</code> 和 <code>baskets</code>，其中 <code>fruits[i]</code> 表示第 <code>i</code> 种水果的 <strong>数量</strong>，<code>baskets[j]</code> 表示第 <code>j</code> 个篮子的 <strong>容量</strong>。</p>
+<p>你需要对 <code>fruits</code> 数组从左到右按照以下规则放置水果：</p>
+<ul>
+<li>每种水果必须放入第一个 <strong>容量大于等于</strong> 该水果数量的 <strong>最左侧可用篮子</strong> 中。</li>
+<li>每个篮子只能装 <strong>一种</strong> 水果。</li>
+<li>如果一种水果 <strong>无法放入</strong> 任何篮子，它将保持 <strong>未放置</strong>。</li>
+</ul></div></article><article class="article"><header class="title">3477. 水果成篮 II</header><hr><div class="article-info"><!----><span class="date">Date: 8/5/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 哈希表, 数组, 滑动窗口</span></div><div class="excerpt">
+<p>给你两个长度为 <code>n</code> 的整数数组，<code>fruits</code> 和 <code>baskets</code>，其中 <code>fruits[i]</code> 表示第 <code>i</code> 种水果的 <strong>数量</strong>，<code>baskets[j]</code> 表示第 <code>j</code> 个篮子的 <strong>容量</strong>。</p>
+<p>你需要对 <code>fruits</code> 数组从左到右按照以下规则放置水果：</p>
+<ul>
+<li>每种水果必须放入第一个 <strong>容量大于等于</strong> 该水果数量的 <strong>最左侧可用篮子</strong> 中。</li>
+<li>每个篮子只能装 <strong>一种</strong> 水果。</li>
+<li>如果一种水果 <strong>无法放入</strong> 任何篮子，它将保持 <strong>未放置</strong>。</li>
+</ul></div></article><article class="article"><header class="title">904. 水果成篮</header><hr><div class="article-info"><!----><span class="date">Date: 8/4/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 哈希表, 数组, 滑动窗口</span></div><div class="excerpt">
+<p>你正在探访一家农场，农场从左到右种植了一排果树。这些树用一个整数数组 <code>fruits</code> 表示，其中 <code>fruits[i]</code> 是第 <code>i</code> 棵树上的水果 <strong>种类</strong> 。</p>
+<p>你想要尽可能多地收集水果。然而，农场的主人设定了一些严格的规矩，你必须按照要求采摘水果：</p>
+<ul>
+<li>你只有 <strong>两个</strong> 篮子，并且每个篮子只能装 <strong>单一类型</strong> 的水果。每个篮子能够装的水果总量没有限制。</li>
+<li>你可以选择任意一棵树开始采摘，你必须从 <strong>每棵</strong> 树（包括开始采摘的树）上 <strong>恰好摘一个水果</strong> 。采摘的水果应当符合篮子中的水果类型。每采摘一次，你将会向右移动到下一棵树，并继续采摘。</li>
+<li>一旦你走到某棵树前，但水果不符合篮子的水果类型，那么就必须停止采摘。</li>
+</ul></div></article><article class="article"><header class="title">2561. 重排水果</header><hr><div class="article-info"><!----><span class="date">Date: 8/2/2025</span><span class="category">Category: LeetCode每日一题</span><span class="tag">Tag: 贪心, 数组, 哈希表, 排序</span></div><div class="excerpt">
+<p>你有两个果篮，每个果篮中有 <code>n</code> 个水果。给你两个下标从 <strong>0</strong> 开始的整数数组 <code>basket1</code> 和 <code>basket2</code> ，用以表示两个果篮中每个水果的交换成本。你想要让两个果篮相等。为此，可以根据需要多次执行下述操作：</p>
+<ul>
+<li>选中两个下标 <code>i</code> 和 <code>j</code> ，并交换 <code>basket1</code> 中的第 <code>i</code> 个水果和 <code>basket2</code> 中的第 <code>j</code> 个水果。</li>
+<li>交换的成本是 <code>min(basket1i,basket2j)</code> 。</li>
+</ul></div></article><!--]--></div></main><!--]--></div><!--[--><!----><!--]--><!--]--></div>
+    <script type="module" src="/assets/app-Cyjh_AJQ.js" defer></script>
+  </body>
+</html>
