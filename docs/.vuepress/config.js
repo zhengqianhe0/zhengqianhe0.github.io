@@ -11,7 +11,7 @@ export default defineUserConfig({
   description: '哦耶',
 
   theme: defaultTheme({
-    logo: 'https://tse4.mm.bing.net/th/id/OIP.bFujutx-gmwcey8Ey2YB8wHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
+    logo: 'https://tse3.mm.bing.net/th/id/OIP.2Ayy7tGPgCBQMkm0gG7C1QHaHN?rs=1&pid=ImgDetMain&o=7&rm=3',
 
     navbar: [
       '/',
