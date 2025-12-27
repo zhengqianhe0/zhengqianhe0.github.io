@@ -1,0 +1,24 @@
+import{_ as n,c as s,a as i,o as a}from"./app-Bpj5Mkzv.js";const l={};function c(d,e){return a(),s("div",null,e[0]||(e[0]=[i(`<h1 id="_11-盛最多水的容器" tabindex="-1"><a class="header-anchor" href="#_11-盛最多水的容器"><span><a href="https://leetcode.cn/problems/container-with-most-water/" target="_blank" rel="noopener noreferrer">11. 盛最多水的容器</a></span></a></h1><p>给定一个长度为 <code>n</code> 的整数数组 <code>height</code> 。有 <code>n</code> 条垂线，第 <code>i</code> 条线的两个端点是 <code>(i, 0)</code> 和 <code>(i, height[i])</code> 。</p><p>找出其中的两条线，使得它们与 <code>x</code> 轴共同构成的容器可以容纳最多的水。</p><p>返回容器可以储存的最大水量。</p><p>**说明：**你不能倾斜容器。</p><p><strong>示例 1：</strong></p><p><img src="https://aliyun-lc-upload.oss-cn-hangzhou.aliyuncs.com/aliyun-lc-upload/uploads/2018/07/25/question_11.jpg" alt="img"></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：[1,8,6,2,5,4,8,3,7]</span>
+<span class="line">输出：49 </span>
+<span class="line">解释：图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为 49。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>示例 2：</strong></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：height = [1,1]</span>
+<span class="line">输出：1</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>提示：</strong></p><ul><li><code>n == height.length</code></li><li><code>2 &lt;= n &lt;= 105</code></li><li><code>0 &lt;= height[i] &lt;= 104</code></li></ul><h1 id="解题思路" tabindex="-1"><a class="header-anchor" href="#解题思路"><span>解题思路</span></a></h1><p>双指针，一次能够减少n种情况，即先取最大宽度，如果移动高的向里，宽度度一定会变短，高度一定不会变高，所以这个方向的搜索一定乘积不会变大。</p><p>因此需要移动两个柱子之间矮的那个重新计算乘积。</p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">class Solution {</span>
+<span class="line">public:</span>
+<span class="line">    int maxArea(vector&lt;int&gt;&amp; height) {</span>
+<span class="line">        int n=height.size();</span>
+<span class="line">        int i=0,j=n-1;</span>
+<span class="line">        int ans=0;</span>
+<span class="line">        while(i&lt;j){</span>
+<span class="line">            int area=(j-i)*min(height[j],height[i]);</span>
+<span class="line">            ans=max(ans,area);</span>
+<span class="line">            if(height[i]&lt;height[j]){</span>
+<span class="line">                i++;</span>
+<span class="line">            }else{</span>
+<span class="line">                j--;</span>
+<span class="line">            }</span>
+<span class="line">        }</span>
+<span class="line">        return ans;</span>
+<span class="line">    }</span>
+<span class="line">};</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>复杂度分析</p><ul><li>时间复杂度：O(n)</li><li>空间复杂度：O(1)</li></ul>`,18)]))}const p=n(l,[["render",c]]),r=JSON.parse('{"path":"/leetcode/20251004.html","title":"11. 盛最多水的容器","lang":"zh-CN","frontmatter":{"date":"2025-10-04T00:00:00.000Z","category":["LeetCode每日一题"],"tag":["贪心","数组","双指针"]},"headers":[],"git":{"updatedTime":1760063627000,"contributors":[{"name":"zhengqianhe0","username":"zhengqianhe0","email":"1821984431@qq.com","commits":1,"url":"https://github.com/zhengqianhe0"}],"changelog":[{"hash":"ab2305f756bd327dc62655e986f32036964e1996","time":1760063627000,"email":"1821984431@qq.com","author":"zhengqianhe0","message":"mryt"}]},"filePathRelative":"leetcode/20251004.md","excerpt":"\\n<p>给定一个长度为 <code>n</code> 的整数数组 <code>height</code> 。有 <code>n</code> 条垂线，第 <code>i</code> 条线的两个端点是 <code>(i, 0)</code> 和 <code>(i, height[i])</code> 。</p>\\n<p>找出其中的两条线，使得它们与 <code>x</code> 轴共同构成的容器可以容纳最多的水。</p>\\n<p>返回容器可以储存的最大水量。</p>\\n<p>**说明：**你不能倾斜容器。</p>\\n<p><strong>示例 1：</strong></p>\\n<p><img src=\\"https://aliyun-lc-upload.oss-cn-hangzhou.aliyuncs.com/aliyun-lc-upload/uploads/2018/07/25/question_11.jpg\\" alt=\\"img\\"></p>"}');export{p as comp,r as data};

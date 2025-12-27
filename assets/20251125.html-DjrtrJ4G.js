@@ -1,0 +1,25 @@
+import{_ as n,c as s,a,o as i}from"./app-Bpj5Mkzv.js";const l={};function d(c,e){return i(),s("div",null,e[0]||(e[0]=[a(`<h1 id="_1015-可被-k-整除的最小整数" tabindex="-1"><a class="header-anchor" href="#_1015-可被-k-整除的最小整数"><span><a href="https://leetcode.cn/problems/smallest-integer-divisible-by-k/" target="_blank" rel="noopener noreferrer">1015. 可被 K 整除的最小整数</a></span></a></h1><p>给定正整数 <code>k</code> ，你需要找出可以被 <code>k</code> 整除的、仅包含数字 <code>**1**</code> 的最 <strong>小</strong> 正整数 <code>n</code> 的长度。</p><p>返回 <code>n</code> 的长度。如果不存在这样的 <code>n</code> ，就返回-1。</p><p><strong>注意：</strong> <code>n</code> 可能不符合 64 位带符号整数。</p><p><strong>示例 1：</strong></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：k = 1</span>
+<span class="line">输出：1</span>
+<span class="line">解释：最小的答案是 n = 1，其长度为 1。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>示例 2：</strong></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：k = 2</span>
+<span class="line">输出：-1</span>
+<span class="line">解释：不存在可被 2 整除的正整数 n 。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>示例 3：</strong></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：k = 3</span>
+<span class="line">输出：3</span>
+<span class="line">解释：最小的答案是 n = 111，其长度为 3。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>提示：</strong></p><ul><li><code>1 &lt;= k &lt;= 105</code></li></ul><h1 id="解题思路" tabindex="-1"><a class="header-anchor" href="#解题思路"><span>解题思路</span></a></h1><p>末尾数字是1，一定不能被2，5整除</p><p>基于数论，k与10互质时，一定有解</p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">class Solution {</span>
+<span class="line">public:</span>
+<span class="line">    int smallestRepunitDivByK(int k) {</span>
+<span class="line">        if(k%2==0||k%5==0){</span>
+<span class="line">            return -1;</span>
+<span class="line">        }</span>
+<span class="line">        int x=1%k;</span>
+<span class="line">        for(int i=1;;i++){</span>
+<span class="line">            if(x==0){</span>
+<span class="line">                return i;</span>
+<span class="line">            }</span>
+<span class="line">            x=(x*10+1)%k;</span>
+<span class="line">        }</span>
+<span class="line">    }</span>
+<span class="line">};</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>复杂度分析</p><ul><li>时间复杂度：O(n)</li><li>空间复杂度：O(1)</li></ul>`,18)]))}const t=n(l,[["render",d]]),p=JSON.parse('{"path":"/leetcode/20251125.html","title":"1015. 可被 K 整除的最小整数","lang":"zh-CN","frontmatter":{"date":"2025-11-25T00:00:00.000Z","category":["LeetCode每日一题"],"tag":["哈希表","数学"]},"headers":[],"git":{"updatedTime":1764379051000,"contributors":[{"name":"zhengqianhe0","username":"zhengqianhe0","email":"1821984431@qq.com","commits":1,"url":"https://github.com/zhengqianhe0"}],"changelog":[{"hash":"f1efcaa796af7064e3cee738675cd19d4efba611","time":1764379051000,"email":"1821984431@qq.com","author":"zhengqianhe0","message":"mryt"}]},"filePathRelative":"leetcode/20251125.md","excerpt":"\\n<p>给定正整数 <code>k</code> ，你需要找出可以被 <code>k</code> 整除的、仅包含数字 <code>**1**</code> 的最 <strong>小</strong> 正整数 <code>n</code> 的长度。</p>\\n<p>返回 <code>n</code> 的长度。如果不存在这样的 <code>n</code> ，就返回-1。</p>\\n<p><strong>注意：</strong> <code>n</code> 可能不符合 64 位带符号整数。</p>\\n<p><strong>示例 1：</strong></p>\\n<div class=\\"language-text line-numbers-mode\\" data-highlighter=\\"prismjs\\" data-ext=\\"text\\"><pre><code><span class=\\"line\\">输入：k = 1</span>\\n<span class=\\"line\\">输出：1</span>\\n<span class=\\"line\\">解释：最小的答案是 n = 1，其长度为 1。</span>\\n<span class=\\"line\\"></span></code></pre>\\n<div class=\\"line-numbers\\" aria-hidden=\\"true\\" style=\\"counter-reset:line-number 0\\"><div class=\\"line-number\\"></div><div class=\\"line-number\\"></div><div class=\\"line-number\\"></div></div></div>"}');export{t as comp,p as data};

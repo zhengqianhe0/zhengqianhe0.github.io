@@ -1,0 +1,29 @@
+import{_ as s,c as e,a,o as i}from"./app-Bpj5Mkzv.js";const l={};function d(r,n){return i(),e("div",null,n[0]||(n[0]=[a(`<h1 id="_1323-6-和-9-组成的最大数字" tabindex="-1"><a class="header-anchor" href="#_1323-6-和-9-组成的最大数字"><span><a href="https://leetcode.cn/problems/maximum-69-number/" target="_blank" rel="noopener noreferrer">1323. 6 和 9 组成的最大数字</a></span></a></h1><p>给你一个仅由数字 6 和 9 组成的正整数 <code>num</code>。</p><p>你最多只能翻转一位数字，将 6 变成 9，或者把 9 变成 6 。</p><p>请返回你可以得到的最大数字。</p><p><strong>示例 1：</strong></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：num = 9669</span>
+<span class="line">输出：9969</span>
+<span class="line">解释：</span>
+<span class="line">改变第一位数字可以得到 6669 。</span>
+<span class="line">改变第二位数字可以得到 9969 。</span>
+<span class="line">改变第三位数字可以得到 9699 。</span>
+<span class="line">改变第四位数字可以得到 9666 。</span>
+<span class="line">其中最大的数字是 9969 。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>示例 2：</strong></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：num = 9996</span>
+<span class="line">输出：9999</span>
+<span class="line">解释：将最后一位从 6 变到 9，其结果 9999 是最大的数。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>示例 3：</strong></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：num = 9999</span>
+<span class="line">输出：9999</span>
+<span class="line">解释：无需改变就已经是最大的数字了。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>提示：</strong></p><ul><li><code>1 &lt;= num &lt;= 10^4</code></li><li><code>num</code> 每一位上的数字都是 6 或者 9 。</li></ul><h1 id="解题思路" tabindex="-1"><a class="header-anchor" href="#解题思路"><span>解题思路</span></a></h1><p>可以采用to_string和stoi转成字符串，从前向后处理。也可以用数学方法逐个取余进行计算。</p><p>从低到高逐个判断是否是6，找到最大的位是6，最后在num加上最大为的位值。</p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">class Solution {</span>
+<span class="line">public:</span>
+<span class="line">    int maximum69Number (int num) {</span>
+<span class="line">        int max_base=0;</span>
+<span class="line">        int base=1;</span>
+<span class="line">        for(int x=num;x&gt;0;x/=10){</span>
+<span class="line">            if(x%10==6){</span>
+<span class="line">                max_base=base;</span>
+<span class="line">            }</span>
+<span class="line">            base*=10;</span>
+<span class="line">        }</span>
+<span class="line">        return num+max_base*3;</span>
+<span class="line">    }</span>
+<span class="line">};</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>复杂度分析</p><ul><li>时间复杂度：O(lognum)</li><li>空间复杂度：O(1)</li></ul>`,18)]))}const p=s(l,[["render",d]]),t=JSON.parse('{"path":"/leetcode/20250816.html","title":"1323. 6 和 9 组成的最大数字","lang":"zh-CN","frontmatter":{"date":"2025-08-16T00:00:00.000Z","category":["LeetCode每日一题"],"tag":["数学","贪心"]},"headers":[],"git":{"updatedTime":1757033208000,"contributors":[{"name":"zhengqianhe0","username":"zhengqianhe0","email":"1821984431@qq.com","commits":2,"url":"https://github.com/zhengqianhe0"}],"changelog":[{"hash":"74ad287b3313cc2928def8d57bf83e6110f9aa4d","time":1757033208000,"email":"1821984431@qq.com","author":"zhengqianhe0","message":"整理分类"},{"hash":"1788b7b931db5965df3236e2d44d104cc11b4285","time":1755308989000,"email":"1821984431@qq.com","author":"zhengqianhe0","message":"mryt\\\\"}]},"filePathRelative":"leetcode/20250816.md","excerpt":"\\n<p>给你一个仅由数字 6 和 9 组成的正整数 <code>num</code>。</p>\\n<p>你最多只能翻转一位数字，将 6 变成 9，或者把 9 变成 6 。</p>\\n<p>请返回你可以得到的最大数字。</p>\\n<p><strong>示例 1：</strong></p>\\n<div class=\\"language-text line-numbers-mode\\" data-highlighter=\\"prismjs\\" data-ext=\\"text\\"><pre><code><span class=\\"line\\">输入：num = 9669</span>\\n<span class=\\"line\\">输出：9969</span>\\n<span class=\\"line\\">解释：</span>\\n<span class=\\"line\\">改变第一位数字可以得到 6669 。</span>\\n<span class=\\"line\\">改变第二位数字可以得到 9969 。</span>\\n<span class=\\"line\\">改变第三位数字可以得到 9699 。</span>\\n<span class=\\"line\\">改变第四位数字可以得到 9666 。</span>\\n<span class=\\"line\\">其中最大的数字是 9969 。</span>\\n<span class=\\"line\\"></span></code></pre>\\n<div class=\\"line-numbers\\" aria-hidden=\\"true\\" style=\\"counter-reset:line-number 0\\"><div class=\\"line-number\\"></div><div class=\\"line-number\\"></div><div class=\\"line-number\\"></div><div class=\\"line-number\\"></div><div class=\\"line-number\\"></div><div class=\\"line-number\\"></div><div class=\\"line-number\\"></div><div class=\\"line-number\\"></div></div></div>"}');export{p as comp,t as data};

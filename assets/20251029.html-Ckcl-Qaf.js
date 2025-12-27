@@ -1,0 +1,19 @@
+import{_ as s,c as e,a,o as t}from"./app-Bpj5Mkzv.js";const l={};function i(r,n){return t(),e("div",null,n[0]||(n[0]=[a(`<h1 id="_3370-仅含置位位的最小整数" tabindex="-1"><a class="header-anchor" href="#_3370-仅含置位位的最小整数"><span><a href="https://leetcode.cn/problems/smallest-number-with-all-set-bits/" target="_blank" rel="noopener noreferrer">3370. 仅含置位位的最小整数</a></span></a></h1><p>给你一个正整数 <code>n</code>。</p><p>返回 <strong>大于等于</strong> <code>n</code> 且二进制表示仅包含 <strong>置位</strong> 位的 <strong>最小</strong> 整数 <code>x</code> 。</p><p><strong>置位</strong> 位指的是二进制表示中值为 <code>1</code> 的位。</p><p><strong>示例 1：</strong></p><p><strong>输入：</strong> n = 5</p><p><strong>输出：</strong> 7</p><p><strong>解释：</strong></p><p>7 的二进制表示是 <code>&quot;111&quot;</code>。</p><p><strong>示例 2：</strong></p><p><strong>输入：</strong> n = 10</p><p><strong>输出：</strong> 15</p><p><strong>解释：</strong></p><p>15 的二进制表示是 <code>&quot;1111&quot;</code>。</p><p><strong>示例 3：</strong></p><p><strong>输入：</strong> n = 3</p><p><strong>输出：</strong> 3</p><p><strong>解释：</strong></p><p>3 的二进制表示是 <code>&quot;11&quot;</code>。</p><p><strong>提示：</strong></p><ul><li><code>1 &lt;= n &lt;= 1000</code></li></ul><h1 id="解题思路" tabindex="-1"><a class="header-anchor" href="#解题思路"><span>解题思路</span></a></h1><p>n的二进制位数为m，大于等于它的最小的全1数就是m位全为1，即2^m-1</p><p>思考：如果要求严格大于n，等价于大于等于n+1。当n本身就是全1的数，+1后位数增多一位，满足要求</p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">class Solution {</span>
+<span class="line">public:</span>
+<span class="line">    int smallestNumber(int n) {</span>
+<span class="line">        return (1&lt;&lt;bit_width((uint32_t)n))-1;</span>
+<span class="line">    }</span>
+<span class="line">};</span>
+<span class="line"></span>
+<span class="line">// 基础的循环写法</span>
+<span class="line">class Solution {</span>
+<span class="line">public:</span>
+<span class="line">    int smallestNumber(int n) {</span>
+<span class="line">        int x = 1;</span>
+<span class="line">        while (x &lt; n) {</span>
+<span class="line">            x = x * 2 + 1;</span>
+<span class="line">        }</span>
+<span class="line">        return x;</span>
+<span class="line">    }</span>
+<span class="line">};</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>复杂度分析</p><ul><li>时间复杂度：O(1)</li><li>空间复杂度：O(1)</li></ul>`,27)]))}const p=s(l,[["render",i]]),c=JSON.parse('{"path":"/leetcode/20251029.html","title":"3370. 仅含置位位的最小整数","lang":"zh-CN","frontmatter":{"date":"2025-10-29T00:00:00.000Z","category":["LeetCode每日一题"],"tag":["位运算","数学"]},"headers":[],"git":{"updatedTime":1761704241000,"contributors":[{"name":"zhengqianhe0","username":"zhengqianhe0","email":"1821984431@qq.com","commits":1,"url":"https://github.com/zhengqianhe0"}],"changelog":[{"hash":"81919479e8539e8d2389317ae4c774b0a7212f3e","time":1761704241000,"email":"1821984431@qq.com","author":"zhengqianhe0","message":"mryt"}]},"filePathRelative":"leetcode/20251029.md","excerpt":"\\n<p>给你一个正整数 <code>n</code>。</p>\\n<p>返回 <strong>大于等于</strong> <code>n</code> 且二进制表示仅包含 <strong>置位</strong> 位的 <strong>最小</strong> 整数 <code>x</code> 。</p>\\n<p><strong>置位</strong> 位指的是二进制表示中值为 <code>1</code> 的位。</p>\\n<p><strong>示例 1：</strong></p>\\n<p><strong>输入：</strong> n = 5</p>\\n<p><strong>输出：</strong> 7</p>"}');export{p as comp,c as data};

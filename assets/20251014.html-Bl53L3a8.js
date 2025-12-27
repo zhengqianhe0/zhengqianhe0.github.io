@@ -1,0 +1,27 @@
+import{_ as s,c as e,a,o as i}from"./app-Bpj5Mkzv.js";const l={};function c(d,n){return i(),e("div",null,n[0]||(n[0]=[a(`<h1 id="_3349-检测相邻递增子数组-i" tabindex="-1"><a class="header-anchor" href="#_3349-检测相邻递增子数组-i"><span><a href="https://leetcode.cn/problems/adjacent-increasing-subarrays-detection-i/" target="_blank" rel="noopener noreferrer">3349. 检测相邻递增子数组 I</a></span></a></h1><p>给你一个由 <code>n</code> 个整数组成的数组 <code>nums</code> 和一个整数 <code>k</code>，请你确定是否存在 <strong>两个</strong> <strong>相邻</strong> 且长度为 <code>k</code> 的 <strong>严格递增</strong> 子数组。具体来说，需要检查是否存在从下标 <code>a</code> 和 <code>b</code> (<code>a &lt; b</code>) 开始的 <strong>两个</strong> 子数组，并满足下述全部条件：</p><ul><li>这两个子数组 <code>nums[a..a + k - 1]</code> 和 <code>nums[b..b + k - 1]</code> 都是 <strong>严格递增</strong> 的。</li><li>这两个子数组必须是 <strong>相邻的</strong>，即 <code>b = a + k</code>。</li></ul><p>如果可以找到这样的 <strong>两个</strong> 子数组，请返回 <code>true</code>；否则返回 <code>false</code>。</p><p><strong>子数组</strong> 是数组中的一个连续 <strong>非空</strong> 的元素序列。</p><p><strong>示例 1：</strong></p><p>**输入：**nums = [2,5,7,8,9,2,3,4,3,1], k = 3</p><p>**输出：**true</p><p><strong>解释：</strong></p><ul><li>从下标 <code>2</code> 开始的子数组为 <code>[7, 8, 9]</code>，它是严格递增的。</li><li>从下标 <code>5</code> 开始的子数组为 <code>[2, 3, 4]</code>，它也是严格递增的。</li><li>两个子数组是相邻的，因此结果为 <code>true</code>。</li></ul><p><strong>示例 2：</strong></p><p>**输入：**nums = [1,2,3,4,4,4,4,5,6,7], k = 5</p><p>**输出：**false</p><p><strong>提示：</strong></p><ul><li><code>2 &lt;= nums.length &lt;= 100</code></li><li><code>1 &lt;= 2 * k &lt;= nums.length</code></li><li><code>-1000 &lt;= nums[i] &lt;= 1000</code></li></ul><h1 id="解题思路" tabindex="-1"><a class="header-anchor" href="#解题思路"><span>解题思路</span></a></h1><p>找到满足要求的最大的k（两个连续的递增的子数组），判断k是否大于参数要求</p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">class Solution {</span>
+<span class="line">public:</span>
+<span class="line">    bool hasIncreasingSubarrays(vector&lt;int&gt;&amp; nums, int k) {</span>
+<span class="line">        int n = nums.size();  // 数组长度</span>
+<span class="line">        int cnt = 1;          // 当前递增序列的长度</span>
+<span class="line">        int precnt = 0;       // 前一个递增序列的长度</span>
+<span class="line">        int ans = 0;          // 存储满足条件的最大子数组长度</span>
+<span class="line">        </span>
+<span class="line">        for (int i = 1; i &lt; n; i++) {</span>
+<span class="line">            if (nums[i] &gt; nums[i - 1]) {</span>
+<span class="line">                cnt++;  // 如果当前元素大于前一个，递增序列长度+1</span>
+<span class="line">            } else {</span>
+<span class="line">                precnt = cnt;  // 递增序列结束，保存当前长度到precnt</span>
+<span class="line">                cnt = 1;       // 重置当前递增序列长度</span>
+<span class="line">            }</span>
+<span class="line">            </span>
+<span class="line">            // 更新可能的最大子数组长度：</span>
+<span class="line">            // 1. 取前一个递增序列和当前递增序列的最小值</span>
+<span class="line">            // 2. 或者当前递增序列的一半</span>
+<span class="line">            ans=max({ans,min(precnt,cnt),cnt/2});</span>
+<span class="line">        }</span>
+<span class="line">        </span>
+<span class="line">        // 判断是否存在长度至少为k的满足条件的子数组</span>
+<span class="line">        return ans &gt;= k;</span>
+<span class="line">    }</span>
+<span class="line">};</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>复杂度分析</p><ul><li>时间复杂度：O(n)</li><li>空间复杂度：O(1)</li></ul>`,20)]))}const t=s(l,[["render",c]]),r=JSON.parse('{"path":"/leetcode/20251014.html","title":"3349. 检测相邻递增子数组 I","lang":"zh-CN","frontmatter":{"date":"2025-10-14T00:00:00.000Z","category":["LeetCode每日一题"],"tag":["数组"]},"headers":[],"git":{"updatedTime":1761139006000,"contributors":[{"name":"zhengqianhe0","username":"zhengqianhe0","email":"1821984431@qq.com","commits":1,"url":"https://github.com/zhengqianhe0"}],"changelog":[{"hash":"c119e9efed4ae6b489aae2aab4afa529062ca62c","time":1761139006000,"email":"1821984431@qq.com","author":"zhengqianhe0","message":"mryt"}]},"filePathRelative":"leetcode/20251014.md","excerpt":"\\n<p>给你一个由 <code>n</code> 个整数组成的数组 <code>nums</code> 和一个整数 <code>k</code>，请你确定是否存在 <strong>两个</strong> <strong>相邻</strong> 且长度为 <code>k</code> 的 <strong>严格递增</strong> 子数组。具体来说，需要检查是否存在从下标 <code>a</code> 和 <code>b</code> (<code>a &lt; b</code>) 开始的 <strong>两个</strong> 子数组，并满足下述全部条件：</p>\\n<ul>\\n<li>这两个子数组 <code>nums[a..a + k - 1]</code> 和 <code>nums[b..b + k - 1]</code> 都是 <strong>严格递增</strong> 的。</li>\\n<li>这两个子数组必须是 <strong>相邻的</strong>，即 <code>b = a + k</code>。</li>\\n</ul>"}');export{t as comp,r as data};

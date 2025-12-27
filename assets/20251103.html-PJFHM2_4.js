@@ -1,0 +1,30 @@
+import{_ as n,c as s,a,o as i}from"./app-Bpj5Mkzv.js";const l={};function d(c,e){return i(),s("div",null,e[0]||(e[0]=[a(`<h1 id="_1578-使绳子变成彩色的最短时间" tabindex="-1"><a class="header-anchor" href="#_1578-使绳子变成彩色的最短时间"><span><a href="https://leetcode.cn/problems/minimum-time-to-make-rope-colorful/" target="_blank" rel="noopener noreferrer">1578. 使绳子变成彩色的最短时间</a></span></a></h1><p>Alice 把 <code>n</code> 个气球排列在一根绳子上。给你一个下标从 <strong>0</strong> 开始的字符串 <code>colors</code> ，其中 <code>colors[i]</code> 是第 <code>i</code> 个气球的颜色。</p><p>Alice 想要把绳子装扮成 <strong>五颜六色的</strong> ，且她不希望两个连续的气球涂着相同的颜色，所以她喊来 Bob 帮忙。Bob 可以从绳子上移除一些气球使绳子变成 <strong>彩色</strong> 。给你一个 <strong>下标从 0 开始</strong> 的整数数组 <code>neededTime</code> ，其中 <code>neededTime[i]</code> 是 Bob 从绳子上移除第 <code>i</code> 个气球需要的时间（以秒为单位）。</p><p>返回 Bob 使绳子变成 <strong>彩色</strong> 需要的 <strong>最少时间</strong> 。</p><p><strong>示例 1：</strong></p><p><img src="https://assets.leetcode.com/uploads/2021/12/13/ballon1.jpg" alt="img"></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：colors = &quot;abaac&quot;, neededTime = [1,2,3,4,5]</span>
+<span class="line">输出：3</span>
+<span class="line">解释：在上图中，&#39;a&#39; 是蓝色，&#39;b&#39; 是红色且 &#39;c&#39; 是绿色。</span>
+<span class="line">Bob 可以移除下标 2 的蓝色气球。这将花费 3 秒。</span>
+<span class="line">移除后，不存在两个连续的气球涂着相同的颜色。总时间 = 3 。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>示例 2：</strong></p><p><img src="https://assets.leetcode.com/uploads/2021/12/13/balloon2.jpg" alt="img"></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：colors = &quot;abc&quot;, neededTime = [1,2,3]</span>
+<span class="line">输出：0</span>
+<span class="line">解释：绳子已经是彩色的，Bob 不需要从绳子上移除任何气球。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>示例 3：</strong></p><p><img src="https://assets.leetcode.com/uploads/2021/12/13/balloon3.jpg" alt="img"></p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">输入：colors = &quot;aabaa&quot;, neededTime = [1,2,3,4,1]</span>
+<span class="line">输出：2</span>
+<span class="line">解释：Bob 会移除下标 0 和下标 4 处的气球。这两个气球各需要 1 秒来移除。</span>
+<span class="line">移除后，不存在两个连续的气球涂着相同的颜色。总时间 = 1 + 1 = 2 。</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>提示：</strong></p><ul><li><code>n == colors.length == neededTime.length</code></li><li><code>1 &lt;= n &lt;= 105</code></li><li><code>1 &lt;= neededTime[i] &lt;= 104</code></li><li><code>colors</code> 仅由小写英文字母组成</li></ul><h1 id="解题思路" tabindex="-1"><a class="header-anchor" href="#解题思路"><span>解题思路</span></a></h1><p>直接遍历，找到每一段连续重复的同色气球</p><p>找到其中最大耗时的，移除其他的</p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre><code><span class="line">class Solution {</span>
+<span class="line">public:</span>
+<span class="line">    int minCost(string colors, vector&lt;int&gt;&amp; neededTime) {</span>
+<span class="line">        int n=colors.size();</span>
+<span class="line">        int ans=0,max_t=0;</span>
+<span class="line">        for(int i=0;i&lt;n;i++){</span>
+<span class="line">            int t=neededTime[i];</span>
+<span class="line">            ans+=t;</span>
+<span class="line">            max_t=max(max_t,t);</span>
+<span class="line">            if(i==n-1||colors[i]!=colors[i+1]){</span>
+<span class="line">                ans-=max_t;</span>
+<span class="line">                max_t=0;</span>
+<span class="line">            }</span>
+<span class="line">        }</span>
+<span class="line">        return ans;</span>
+<span class="line">    }</span>
+<span class="line">};</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>复杂度分析</p><ul><li>时间复杂度：O(n)</li><li>空间复杂度：O(1)</li></ul>`,21)]))}const t=n(l,[["render",d]]),r=JSON.parse('{"path":"/leetcode/20251103.html","title":"1578. 使绳子变成彩色的最短时间","lang":"zh-CN","frontmatter":{"date":"2025-11-03T00:00:00.000Z","category":["LeetCode每日一题"],"tag":["字符串","贪心","数组"]},"headers":[],"git":{"updatedTime":1763518154000,"contributors":[{"name":"zhengqianhe0","username":"zhengqianhe0","email":"1821984431@qq.com","commits":1,"url":"https://github.com/zhengqianhe0"}],"changelog":[{"hash":"4b5123a2226ab3055587cb87c78becf08ce40201","time":1763518154000,"email":"1821984431@qq.com","author":"zhengqianhe0","message":"mryt"}]},"filePathRelative":"leetcode/20251103.md","excerpt":"\\n<p>Alice 把 <code>n</code> 个气球排列在一根绳子上。给你一个下标从 <strong>0</strong> 开始的字符串 <code>colors</code> ，其中 <code>colors[i]</code> 是第 <code>i</code> 个气球的颜色。</p>\\n<p>Alice 想要把绳子装扮成 <strong>五颜六色的</strong> ，且她不希望两个连续的气球涂着相同的颜色，所以她喊来 Bob 帮忙。Bob 可以从绳子上移除一些气球使绳子变成 <strong>彩色</strong> 。给你一个 <strong>下标从 0 开始</strong> 的整数数组 <code>neededTime</code> ，其中 <code>neededTime[i]</code> 是 Bob 从绳子上移除第 <code>i</code> 个气球需要的时间（以秒为单位）。</p>"}');export{t as comp,r as data};
